@@ -1,37 +1,19 @@
 <div align="center">
-
-<p><code>jaysonar07@github ~ $ neofetch --live</code></p>
-
-<table width="100%" style="display:table;width:100%;table-layout:fixed;">
-<tr>
-<td width="100%" style="width:100%;" valign="middle" align="center">
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://www.gitskins.com/api/section/portrait?username=jaysonar07&theme=github-dark&avatar=https%3A%2F%2Favatars.githubusercontent.com%2Fu%2F216848341%3Fu%3Daa90d9da00626d387156ebfd8437f77a0bb1cf36%26v%3D4&style=terminal&color=1&v=terminal-portrait-1&mode=light" />
-  <img src="https://www.gitskins.com/api/section/portrait?username=jaysonar07&theme=github-dark&avatar=https%3A%2F%2Favatars.githubusercontent.com%2Fu%2F216848341%3Fu%3Daa90d9da00626d387156ebfd8437f77a0bb1cf36%26v%3D4&style=terminal&color=1&v=terminal-portrait-1&mode=dark" width="680" alt="Jay Sonar animated terminal portrait" />
+  <source media="(prefers-color-scheme: light)" srcset="https://www.gitskins.com/api/section/hero?username=jaysonar07&theme=aurora&avatar=https%3A%2F%2Favatars.githubusercontent.com%2Fu%2F216848341%3Fu%3Daa90d9da00626d387156ebfd8437f77a0bb1cf36%26v%3D4&variant=living-identity&label=Jay%20Sonar&v=wow-living-identity-1&mode=light" />
+  <img src="https://www.gitskins.com/api/section/hero?username=jaysonar07&theme=aurora&avatar=https%3A%2F%2Favatars.githubusercontent.com%2Fu%2F216848341%3Fu%3Daa90d9da00626d387156ebfd8437f77a0bb1cf36%26v%3D4&variant=living-identity&label=Jay%20Sonar&v=wow-living-identity-1&mode=dark" width="100%" alt="Jay Sonar animated Living Identity portrait and ASCII name" />
 </picture>
-</td>
-</tr>
-</table>
-
-<table width="100%" style="display:table;width:100%;table-layout:fixed;">
-<tr>
-<td width="100%" style="width:100%;" valign="middle" align="center">
-<pre><code>┌───[ IDENTITY ]────────────────────┐
-│ Jay Sonar                         │
-│ Cybersecurity full-stack engineer │
-├─[ TELEMETRY ]─────────────────────┤
-│ repos                 11 │
-│ stars                  7 │
-│ contributions         20 │
-│ followers              4 │ │
-└────────────────────────────────────┘</code></pre>
-</td>
-</tr>
-</table>
-
-<p><strong>● ONLINE</strong> · I am a second year CSIT student at Symbiosis skills and professional University.
+<h3><strong>Cybersecurity and full-stack engineer</strong> </h3> <br/>
+<p>An enthusiastic second year CSIT student studyng at Symbiosis skills and professional University.
 Keen towards software development and cybersecurity</p>
+<p><a href="https://github.com/jaysonar07">GitHub</a>  ·  <a href="https://www.linkedin.com/in/jay-sonar-573637275/">LinkedIn</a></p>
 </div>
+
+
+
+<p align="center">
+  <img src="https://www.gitskins.com/api/section/galaxy?username=jaysonar07&theme=midnight&avatar=https%3A%2F%2Favatars.githubusercontent.com%2Fu%2F216848341%3Fu%3Daa90d9da00626d387156ebfd8437f77a0bb1cf36%26v%3D4" alt="jaysonar07 galaxy visual" />
+</p>
 
 <h2><code>$ tail -n 7 /var/log/build.log</code></h2>
 
@@ -39,7 +21,7 @@ Keen towards software development and cybersecurity</p>
 [ok] role detected: Frontend or full-stack engineer
 [ok] environment: GitHub public cloud
 [ok] workspace: independent
-[ok] primary stack: TypeScript · HTML · JavaScript · Solidity
+[ok] primary stack: TypeScript · HTML · JavaScript · Solidity · PHP
 [run] I am a second year CSIT student at Symbiosis skills and professional University.
 Keen towards software development and cybersecurity</code></pre>
 
@@ -107,5 +89,4 @@ Keen towards software development and cybersecurity</code></pre>
   <source media="(prefers-color-scheme: light)" srcset="https://www.gitskins.com/api/section/social?username=jaysonar07&theme=github-dark&avatar=https%3A%2F%2Favatars.githubusercontent.com%2Fu%2F216848341%3Fu%3Daa90d9da00626d387156ebfd8437f77a0bb1cf36%26v%3D4&v=terminal-social-1&mode=light" />
   <img src="https://www.gitskins.com/api/section/social?username=jaysonar07&theme=github-dark&avatar=https%3A%2F%2Favatars.githubusercontent.com%2Fu%2F216848341%3Fu%3Daa90d9da00626d387156ebfd8437f77a0bb1cf36%26v%3D4&v=terminal-social-1&mode=dark" width="100%" alt="Jay Sonar terminal contact links" />
 </picture></p>
-<p align="center"><a href="https://github.com/jaysonar07">GitHub</a></p>
-<p align="center"><sub>Jay Sonar · terminal command center generated with <a href="https://www.gitskins.com/readme-generator">GitSkins</a></sub></p>
+
