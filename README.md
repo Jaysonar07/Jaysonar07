@@ -16,16 +16,15 @@
 <table width="100%" style="display:table;width:100%;table-layout:fixed;">
 <tr>
 <td width="100%" style="width:100%;" valign="middle" align="center">
-<pre><code>┌─[ IDENTITY ]──────────────────┐
-│ Jay Sonar                    │
-│ Frontend or full-stack engin │
-├─[ TELEMETRY ]─────────────────┤
-│ repos                  7 │
-│ stars                  0 │
+<pre><code>┌───[ IDENTITY ]────────────────────┐
+│ Jay Sonar                         │
+│ Cybersecurity full-stack engineer │
+├─[ TELEMETRY ]─────────────────────┤
+│ repos                 11 │
+│ stars                  7 │
 │ contributions         20 │
-│ followers              4 │
-│ location      Pune , pimpri- │
-└───────────────────────────────┘</code></pre>
+│ followers              4 │ │
+└────────────────────────────────────┘</code></pre>
 </td>
 </tr>
 </table>
@@ -40,7 +39,6 @@ Keen towards software development and cybersecurity</p>
 [ok] role detected: Frontend or full-stack engineer
 [ok] environment: GitHub public cloud
 [ok] workspace: independent
-[ok] coordinates: Pune , pimpri-chinchwad
 [ok] primary stack: TypeScript · HTML · JavaScript · Solidity
 [run] I am a second year CSIT student at Symbiosis skills and professional University.
 Keen towards software development and cybersecurity</code></pre>
