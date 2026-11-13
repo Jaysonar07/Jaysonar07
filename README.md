@@ -100,41 +100,26 @@
 <table width="100%">
   <tr>
     <td width="50%" valign="top">
-      <h3><a href="https://github.com/Jaysonar07/WiseupAI">📁 WiseupAI</a></h3>
-      <p>AI-powered budget tracker built for teens that gamifies personal finance and daily expense tracking.</p>
-      <p>
-        <img src="https://img.shields.io/badge/TypeScript-0d1117?style=flat-square&logo=typescript&logoColor=3178C6" alt="TypeScript" />
-        <img src="https://img.shields.io/badge/React-0d1117?style=flat-square&logo=react&logoColor=61DAFB" alt="React" />
-        <img src="https://img.shields.io/badge/Node.js-0d1117?style=flat-square&logo=nodedotjs&logoColor=339933" alt="Node.js" />
-      </p>
+      <h3><a href="https://github.com/Jaysonar07/ScholarParchment">📁 ScholarParchment</a></h3>
+      <p>Active repository built and maintained on GitHub.</p>
+      <p><img src="https://img.shields.io/badge/TypeScript-0d1117?style=flat-square&logo=typescript&logoColor=3178C6" alt="TypeScript" /></p>
     </td>
     <td width="50%" valign="top">
-      <h3><a href="https://github.com/Jaysonar07/Queuely">📁 Queuely</a></h3>
-      <p>Smart real-time queue management and logging system engineered for event flow efficiency.</p>
-      <p>
-        <img src="https://img.shields.io/badge/TypeScript-0d1117?style=flat-square&logo=typescript&logoColor=3178C6" alt="TypeScript" />
-        <img src="https://img.shields.io/badge/React-0d1117?style=flat-square&logo=react&logoColor=61DAFB" alt="React" />
-        <img src="https://img.shields.io/badge/PostgreSQL-0d1117?style=flat-square&logo=postgresql&logoColor=4169E1" alt="PostgreSQL" />
-      </p>
+      <h3><a href="https://github.com/Jaysonar07/WiseupAI">📁 WiseupAI</a></h3>
+      <p>WiseupAI is an AI-powered budget tracker built just for teens. We turn Gamify boring personal finance by tracking your daily expenses, visualizing your habits, and creating AI-driven savings plans for your dream purchases.</p>
+      <p><img src="https://img.shields.io/badge/TypeScript-0d1117?style=flat-square&logo=typescript&logoColor=3178C6" alt="TypeScript" /></p>
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <h3><a href="https://github.com/Jaysonar07/ScholarParchment">📁 ScholarParchment</a></h3>
-      <p>Academic document and credential management system built with modern TypeScript architecture.</p>
-      <p>
-        <img src="https://img.shields.io/badge/TypeScript-0d1117?style=flat-square&logo=typescript&logoColor=3178C6" alt="TypeScript" />
-        <img src="https://img.shields.io/badge/Tailwind_CSS-0d1117?style=flat-square&logo=tailwindcss&logoColor=06B6D4" alt="Tailwind CSS" />
-      </p>
+      <h3><a href="https://github.com/Jaysonar07/skills-introduction-to-github">📁 skills-introduction-to-github</a></h3>
+      <p>Exercise: Introduction to GitHub</p>
+      <p><img src="https://img.shields.io/badge/TypeScript-0d1117?style=flat-square&logo=typescript&logoColor=3178C6" alt="TypeScript" /></p>
     </td>
     <td width="50%" valign="top">
-      <h3><a href="https://github.com/Jaysonar07/Basic-Landing-page">📁 Basic-Landing-page</a></h3>
-      <p>Responsive animated landing page featuring smooth micro-interactions and modern UI styling.</p>
-      <p>
-        <img src="https://img.shields.io/badge/TypeScript-0d1117?style=flat-square&logo=typescript&logoColor=3178C6" alt="TypeScript" />
-        <img src="https://img.shields.io/badge/HTML5-0d1117?style=flat-square&logo=html5&logoColor=E34F26" alt="HTML5" />
-        <img src="https://img.shields.io/badge/CSS3-0d1117?style=flat-square&logo=css3&logoColor=1572B6" alt="CSS3" />
-      </p>
+      <h3><a href="https://github.com/Jaysonar07/Queuely">📁 Queuely</a></h3>
+      <p>a smart queue management and loging system for efficiancy , can be used in real time events </p>
+      <p><img src="https://img.shields.io/badge/TypeScript-0d1117?style=flat-square&logo=typescript&logoColor=3178C6" alt="TypeScript" /></p>
     </td>
   </tr>
 </table>
