@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  build-profile:
+  update-readme:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout profile repo
@@ -20,286 +20,60 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install Pillow
-        run: pip install pillow
-
-      - name: Generate Local Animated SVGs & Sync 4 Recent Projects
+      - name: Sync 4 Recent Projects
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python - << 'EOF'
           import html, json, os, urllib.request
-          from io import BytesIO
-          from PIL import Image, ImageEnhance
 
           USERNAME = "Jaysonar07"
-          AVATAR_URL = "https://avatars.githubusercontent.com/u/216848341?v=4"
-          os.makedirs("assets", exist_ok=True)
 
-          # 1. Fetch live contributions, languages & 4 most recent non-fork repos via GitHub GraphQL API
-          query = """
-          query($login: String!) {
-            user(login: $login) {
-              contributionsCollection {
-                totalCommitContributions
-                totalPullRequestContributions
-                totalIssueContributions
-                contributionCalendar {
-                  totalContributions
-                  weeks {
-                    contributionDays {
-                      contributionCount
-                      date
-                    }
-                  }
-                }
-              }
-              repositories(first: 12, ownerAffiliations: OWNER, isFork: false, orderBy: {field: PUSHED_AT, direction: DESC}) {
-                totalCount
-                nodes {
-                  name
-                  description
-                  url
-                  stargazerCount
-                  languages(first: 4, orderBy: {field: SIZE, direction: DESC}) {
-                    edges {
-                      size
-                      node { name color }
-                    }
-                  }
-                }
-              }
-            }
-          }
-          """
-          req = urllib.request.Request(
-              "https://api.github.com/graphql",
-              data=json.dumps({"query": query, "variables": {"login": USERNAME}}).encode("utf-8"),
-              headers={
-                  "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
-                  "Content-Type": "application/json",
-              },
-          )
-          data = json.loads(urllib.request.urlopen(req).read())["data"]["user"]
-          contrib = data["contributionsCollection"]
-          total_contribs = contrib["contributionCalendar"]["totalContributions"]
-          total_commits = contrib["totalCommitContributions"]
-          total_prs = contrib["totalPullRequestContributions"]
-          total_repos = data["repositories"]["totalCount"]
-
-          all_repos = [
-              r for r in data["repositories"]["nodes"]
-              if r["name"].lower() != USERNAME.lower()
-          ]
-          recent_4 = all_repos[:4]
-
-          # Aggregate language bytes across recent repos
-          lang_totals = {}
-          for r in all_repos:
-              for edge in r["languages"]["edges"]:
-                  lname = edge["node"]["name"]
-                  lcolor = edge["node"]["color"] or "#38bdf8"
-                  lang_totals[lname] = [lang_totals.get(lname, [0, lcolor])[0] + edge["size"], lcolor]
-          top_langs = sorted(lang_totals.items(), key=lambda x: x[1][0], reverse=True)[:5]
-          total_bytes = sum(v[0] for _, v in top_langs) or 1
-
-          # 2. Convert Profile Photo into High-Contrast ASCII Lines
-          with urllib.request.urlopen(AVATAR_URL) as resp:
-              img = Image.open(BytesIO(resp.read())).convert("L")
-          img = ImageEnhance.Contrast(img).enhance(1.75).resize((54, 28))
-          chars = " .:-=+*#%@"
-          ascii_rows = []
-          for y in range(28):
-              row_str = "".join(chars[int(img.getpixel((x, y)) / 256 * len(chars))] for x in range(54))
-              ascii_rows.append(html.escape(row_str))
-
-          ascii_svg_text = "\n".join(
-              f'<text x="24" y="{58 + i * 8.6:.1f}" class="ascii">{line}</text>'
-              for i, line in enumerate(ascii_rows)
-          )
-
-          # 3. Generate Animated Hero SVG (ASCII Portrait + Terminal Intro Card)
-          hero_svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="880" height="325" viewBox="0 0 880 325">
-            <defs>
-              <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.7"/>
-                <stop offset="50%" stop-color="#818cf8" stop-opacity="0.4"/>
-                <stop offset="100%" stop-color="#22d3ee" stop-opacity="0.7"/>
-              </linearGradient>
-            </defs>
-            <style>
-              .bg {{ fill: #0d1117; stroke: url(#borderGrad); stroke-width: 1.5; rx: 12; }}
-              .bar {{ fill: #161b22; }}
-              .title {{ font: 600 12px 'Fira Code', 'Cascadia Code', Consolas, monospace; fill: #8b949e; }}
-              .ascii {{ font: 700 8.5px 'Fira Code', Consolas, monospace; fill: #38bdf8; xml:space="preserve"; }}
-              .cmd {{ font: 700 13px 'Fira Code', Consolas, monospace; fill: #22d3ee; }}
-              .key {{ font: 700 12.5px 'Fira Code', Consolas, monospace; fill: #38bdf8; }}
-              .val {{ font: 400 12.5px 'Fira Code', Consolas, monospace; fill: #c9d1d9; }}
-              .name {{ font: 700 20px 'Fira Code', Consolas, monospace; fill: #f8fafc; }}
-              .typing {{ font: 600 12.5px 'Fira Code', Consolas, monospace; fill: #34d399; }}
-              @keyframes pulseGlow {{
-                0%, 100% {{ opacity: 0.85; }}
-                50% {{ opacity: 1; }}
-              }}
-              @keyframes blinkCursor {{
-                0%, 49% {{ opacity: 1; }}
-                50%, 100% {{ opacity: 0; }}
-              }}
-              @keyframes slideIn {{
-                from {{ opacity: 0; transform: translateX(8px); }}
-                to {{ opacity: 1; transform: translateX(0); }}
-              }}
-              .ascii-group {{ animation: pulseGlow 4s ease-in-out infinite; }}
-              .info-group {{ animation: slideIn 0.8s ease-out forwards; }}
-              .cursor {{ animation: blinkCursor 1s infinite; fill: #38bdf8; }}
-            </style>
-
-            <rect x="1" y="1" width="878" height="323" rx="12" class="bg"/>
-            <path d="M 13 1 H 867 A 12 12 0 0 1 879 13 V 34 H 1 V 13 A 12 12 0 0 1 13 1 Z" class="bar"/>
-            <circle cx="22" cy="18" r="5.5" fill="#ff5f56"/>
-            <circle cx="40" cy="18" r="5.5" fill="#ffbd2e"/>
-            <circle cx="58" cy="18" r="5.5" fill="#27c93f"/>
-            <text x="440" y="22" text-anchor="middle" class="title">bash — jaysonar07@sspu-pune: ~/identity</text>
-
-            <g class="ascii-group">
-              {ascii_svg_text}
-            </g>
-
-            <line x1="322" y1="48" x2="322" y2="306" stroke="#21262d" stroke-width="1.5"/>
-
-            <g class="info-group">
-              <text x="346" y="68" class="cmd">$ neofetch --identity</text>
-              <text x="346" y="98" class="name">Jay Sonar</text>
-              <text x="346" y="114" class="title">──────────────────────────────────────────────────</text>
-              <text x="346" y="136" class="key">Role:    <tspan class="val">Cybersecurity &amp; Full-Stack Engineer</tspan></text>
-              <text x="346" y="158" class="key">Host:    <tspan class="val">Symbiosis Skills &amp; Prof. University (CSIT)</tspan></text>
-              <text x="346" y="180" class="key">OS:      <tspan class="val">Kali Linux / Windows 11</tspan></text>
-              <text x="346" y="202" class="key">Focus:   <tspan class="val">AppSec · Pentesting · TypeScript · AI Systems</tspan></text>
-              <text x="346" y="224" class="key">Stack:   <tspan class="val">TS · React · Node · PostgreSQL · Solidity</tspan></text>
-              <text x="346" y="246" class="key">Status:  <tspan class="val">Shipping useful software in public</tspan></text>
-
-              <rect x="346" y="266" width="504" height="34" rx="6" fill="#161b22" stroke="#30363d"/>
-              <text x="360" y="287" class="typing">&gt; root@jaysonar07:~# ./deploy --mode=production</text>
-              <rect x="708" y="276" width="8" height="14" class="cursor"/>
-            </g>
-          </svg>
-          """
-          with open("assets/hero.svg", "w", encoding="utf-8") as f:
-              f.write(hero_svg)
-
-          # 4. Generate Animated Contributions & Languages SVG
-          days = [
-              d for w in contrib["contributionCalendar"]["weeks"]
-              for d in w["contributionDays"]
-          ][-30:]
-          max_c = max((d["contributionCount"] for d in days), default=1) or 1
-
-          bars_svg = []
-          for idx, d in enumerate(days):
-              cnt = d["contributionCount"]
-              bar_h = max(4, int((cnt / max_c) * 95))
-              x = 435 + idx * 13.5
-              y = 175 - bar_h
-              color = "#21262d" if cnt == 0 else ("#0284c7" if cnt <= 2 else ("#38bdf8" if cnt <= 5 else "#22d3ee"))
-              delay = idx * 0.03
-              bars_svg.append(
-                  f'<rect x="{x:.1f}" y="{y}" width="9" height="{bar_h}" rx="2" fill="{color}" '
-                  f'style="animation: growBar 0.6s ease-out {delay:.2f}s both;"/>'
-              )
-
-          lang_bar_parts = []
-          lang_legend_parts = []
-          cur_x = 28
-          for idx, (lname, (lbytes, lcolor)) in enumerate(top_langs):
-              pct = (lbytes / total_bytes) * 100
-              w_px = max(4, (lbytes / total_bytes) * 360)
-              lang_bar_parts.append(f'<rect x="{cur_x:.1f}" y="142" width="{w_px:.1f}" height="10" fill="{lcolor}"/>')
-              cur_x += w_px
-              lx = 28 + (idx % 3) * 125
-              ly = 172 + (idx // 3) * 20
-              lang_legend_parts.append(
-                  f'<circle cx="{lx + 4}" cy="{ly - 4}" r="4" fill="{lcolor}"/>'
-                  f'<text x="{lx + 14}" y="{ly}" class="sub">{html.escape(lname)} {pct:.0f}%</text>'
-              )
-
-          stats_svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="880" height="215" viewBox="0 0 880 215">
-            <style>
-              .card {{ fill: #0d1117; stroke: #30363d; stroke-width: 1.5; }}
-              .hdr {{ font: 700 13px 'Fira Code', Consolas, monospace; fill: #38bdf8; }}
-              .num {{ font: 700 22px 'Fira Code', Consolas, monospace; fill: #f8fafc; }}
-              .sub {{ font: 400 11.5px 'Fira Code', Consolas, monospace; fill: #8b949e; }}
-              @keyframes growBar {{
-                from {{ transform: scaleY(0); opacity: 0; }}
-                to {{ transform: scaleY(1); opacity: 1; }}
-              }}
-            </style>
-            <rect x="1" y="1" width="878" height="213" rx="12" class="card"/>
-            <text x="28" y="34" class="hdr">$ git status --metrics</text>
-
-            <text x="28" y="72" class="num">{total_contribs}</text>
-            <text x="28" y="90" class="sub">Yearly Contribs</text>
-
-            <text x="155" y="72" class="num">{total_commits}</text>
-            <text x="155" y="90" class="sub">Commits</text>
-
-            <text x="260" y="72" class="num">{total_repos}</text>
-            <text x="260" y="90" class="sub">Repos</text>
-
-            <text x="340" y="72" class="num">{total_prs}</text>
-            <text x="340" y="90" class="sub">PRs</text>
-
-            <text x="28" y="128" class="hdr">Top Languages</text>
-            <g>{"".join(lang_bar_parts)}</g>
-            <g>{"".join(lang_legend_parts)}</g>
-
-            <line x1="412" y1="22" x2="412" y2="195" stroke="#21262d" stroke-width="1.5"/>
-            <text x="435" y="34" class="hdr">$ git log --last-30-days</text>
-            <g>{"".join(bars_svg)}</g>
-            <text x="435" y="194" class="sub">30 days ago</text>
-            <text x="840" y="194" text-anchor="end" class="sub">Today</text>
-          </svg>
-          """
-          with open("assets/stats.svg", "w", encoding="utf-8") as f:
-              f.write(stats_svg)
-
-          # 5. Update 4 Recent Projects Table in README.md with Shields.io Tech Logos
           BADGE_MAP = {
               "TypeScript": ("TypeScript", "typescript", "3178C6"),
               "JavaScript": ("JavaScript", "javascript", "F7DF1E"),
               "Python": ("Python", "python", "3776AB"),
               "HTML": ("HTML5", "html5", "E34F26"),
               "CSS": ("CSS3", "css3", "1572B6"),
-              "Solidity": ("Solidity", "solidity", "38bdf8"),
+              "Solidity": ("Solidity", "solidity", "F59E0B"),
               "PHP": ("PHP", "php", "777BB4"),
               "Shell": ("Bash", "gnubash", "4EAA25"),
               "C++": ("C%2B%2B", "cplusplus", "00599C"),
               "Java": ("Java", "openjdk", "ED8B00"),
           }
 
+          req = urllib.request.Request(
+              f"https://api.github.com/users/{USERNAME}/repos?sort=pushed&per_page=15&type=owner",
+              headers={
+                  "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
+                  "Accept": "application/vnd.github+json",
+              },
+          )
+          repos = [
+              r for r in json.loads(urllib.request.urlopen(req).read())
+              if r["name"].lower() != USERNAME.lower() and not r["fork"]
+          ][:4]
+
           def project_cell(repo):
-              rname = html.escape(repo["name"])
-              rurl = html.escape(repo["url"])
-              rdesc = html.escape(repo["description"] or "Active repository built and maintained on GitHub.")
-              langs = [e["node"]["name"] for e in repo["languages"]["edges"]][:3] or ["TypeScript"]
-              badges = []
-              for lg in langs:
-                  label, logo, color = BADGE_MAP.get(lg, (lg.replace(" ", "_"), "github", "38bdf8"))
-                  badges.append(
-                      f'<img src="https://img.shields.io/badge/{label}-0d1117?style=flat-square&logo={logo}&logoColor={color}" alt="{html.escape(lg)}" />'
-                  )
+              name = html.escape(repo["name"])
+              url = html.escape(repo["html_url"])
+              desc = html.escape(repo["description"] or "Active repository built and maintained on GitHub.")
+              lang = repo["language"] or "TypeScript"
+              label, logo, color = BADGE_MAP.get(lang, (lang.replace(" ", "_"), "github", "F59E0B"))
+              badge = f'<img src="https://img.shields.io/badge/{label}-0d1117?style=flat-square&logo={logo}&logoColor={color}" alt="{html.escape(lang)}" />'
               return (
                   f'    <td width="50%" valign="top">\n'
-                  f'      <h3><a href="{rurl}">📁 {rname}</a></h3>\n'
-                  f'      <p>{rdesc}</p>\n'
-                  f'      <p>{" ".join(badges)}</p>\n'
+                  f'      <h3><a href="{url}">📁 {name}</a></h3>\n'
+                  f'      <p>{desc}</p>\n'
+                  f'      <p>{badge}</p>\n'
                   f'    </td>'
               )
 
-          rows_html = []
-          for i in range(0, len(recent_4), 2):
-              cells = "\n".join(project_cell(r) for r in recent_4[i:i + 2])
-              rows_html.append(f"  <tr>\n{cells}\n  </tr>")
-          projects_block = '\n<table width="100%">\n' + "\n".join(rows_html) + "\n</table>\n"
+          rows = []
+          for i in range(0, len(repos), 2):
+              cells = "\n".join(project_cell(r) for r in repos[i:i + 2])
+              rows.append(f"  <tr>\n{cells}\n  </tr>")
+          projects_block = '\n<table width="100%">\n' + "\n".join(rows) + "\n</table>\n"
 
           with open("README.md", "r", encoding="utf-8") as f:
               readme = f.read()
@@ -312,9 +86,9 @@ jobs:
               f.write(readme)
           EOF
 
-      - name: Commit updated README & SVGs
+      - name: Commit updated README
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add README.md assets/
-          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: update animated SVG cards & recent repos" && git push)
+          git add README.md
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: sync 4 recent projects" && git push)
