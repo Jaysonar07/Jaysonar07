@@ -1,48 +1,13 @@
 <div align="center">
 
-<!-- ASCII-START -->
-<pre><code>
-       .---.              ██╗ █████╗ ██╗   ██╗    ███████╗ ██████╗ ███╗   ██╗ █████╗ ██████╗ 
-      /     \             ██║██╔══██╗╚██╗ ██╔╝    ██╔════╝██╔═══██╗████╗  ██║██╔══██╗██╔══██╗
-     | () () |            ██║███████║ ╚████╔╝     ███████╗██║   ██║██╔██╗ ██║███████║██████╔╝
-      \  ^  /        ██   ██║██╔══██║  ╚██╔╝      ╚════██║██║   ██║██║╚██╗██║██╔══██║██╔══██╗
-       |||||         ╚█████╔╝██║  ██║   ██║       ███████║╚██████╔╝██║ ╚████║██║  ██║██║  ██║
-      /|||||\         ╚════╝ ╚═╝  ╚═╝   ╚═╝       ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝
-     //|||||\\            ───────────────────────────────────────────────────────────────────
-    ///|||||\\\           [ root@jaysonar07 ] :: CYBERSECURITY & FULL-STACK ENGINEER
-</code></pre>
-<!-- ASCII-END -->
+<!-- HERO-START -->
+<img src="./assets/hero.svg" width="100%" alt="Jay Sonar ASCII Portrait & Terminal Intro Card" />
+<!-- HERO-END -->
 
-<!-- Terminal Intro Card -->
-<table width="85%">
-  <tr>
-    <td align="left">
-      <code>● ● ●    bash — jaysonar07@sspu-pune: ~</code>
-    </td>
-  </tr>
-  <tr>
-    <td align="left">
-      <pre><code>$ neofetch --identity
-
-jay@jaysonar07
---------------
-OS:       Kali Linux / Windows 11 (Dual-Boot)
-Host:     Symbiosis Skills & Professional University (CSIT '29)
-Role:     Cybersecurity & Full-Stack Engineer
-Focus:    AppSec · Pentesting · Full-Stack TypeScript · AI Systems
-Stack:    TypeScript · React · Node.js · PostgreSQL · Solidity
-Status:   Building, breaking, and shipping in public</code></pre>
-      <div align="center">
-        <a href="https://github.com/Jaysonar07">
-          <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=15&pause=1000&color=38BDF8¢er=true&vCenter=true&width=600&lines=Second-year+CSIT+Student+%40+SSPU+Pune;Full-Stack+Developer+%26+Security+Enthusiast;Shipping+Useful+Systems+in+Public" alt="Animated Terminal Prompt" />
-        </a>
-        <br />
-        <a href="https://github.com/Jaysonar07"><img src="https://img.shields.io/badge/GitHub-Jaysonar07-0d1117?style=for-the-badge&logo=github&logoColor=38bdf8" alt="GitHub" /></a>
-        <a href="https://www.linkedin.com/in/jay-sonar-573637275/"><img src="https://img.shields.io/badge/LinkedIn-Jay%20Sonar-0d1117?style=for-the-badge&logo=linkedin&logoColor=38bdf8" alt="LinkedIn" /></a>
-      </div>
-    </td>
-  </tr>
-</table>
+<p>
+  <a href="https://github.com/Jaysonar07"><img src="https://img.shields.io/badge/GitHub-Jaysonar07-0d1117?style=for-the-badge&logo=github&logoColor=38bdf8" alt="GitHub" /></a>
+  <a href="https://www.linkedin.com/in/jay-sonar-573637275/"><img src="https://img.shields.io/badge/LinkedIn-Jay%20Sonar-0d1117?style=for-the-badge&logo=linkedin&logoColor=38bdf8" alt="LinkedIn" /></a>
+</p>
 
 </div>
 
@@ -63,20 +28,19 @@ Status:   Building, breaking, and shipping in public</code></pre>
 <h2><code>$ which --all toolchain</code></h2>
 
 <p align="center">
-  <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=ts,js,html,css,react,nodejs,express,postgres,solidity,php,linux,git&perline=6" alt="Tech Stack Icons" />
-  </a>
+  <img src="https://img.shields.io/badge/TypeScript-0d1117?style=for-the-badge&logo=typescript&logoColor=3178C6" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/JavaScript-0d1117?style=for-the-badge&logo=javascript&logoColor=F7DF1E" alt="JavaScript" />
+  <img src="https://img.shields.io/badge/React-0d1117?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
+  <img src="https://img.shields.io/badge/Node.js-0d1117?style=for-the-badge&logo=nodedotjs&logoColor=339933" alt="Node.js" />
+  <img src="https://img.shields.io/badge/Express-0d1117?style=for-the-badge&logo=express&logoColor=ffffff" alt="Express" />
+  <img src="https://img.shields.io/badge/PostgreSQL-0d1117?style=for-the-badge&logo=postgresql&logoColor=4169E1" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/Solidity-0d1117?style=for-the-badge&logo=solidity&logoColor=38bdf8" alt="Solidity" />
+  <img src="https://img.shields.io/badge/HTML5-0d1117?style=for-the-badge&logo=html5&logoColor=E34F26" alt="HTML5" />
+  <img src="https://img.shields.io/badge/CSS3-0d1117?style=for-the-badge&logo=css3&logoColor=1572B6" alt="CSS3" />
+  <img src="https://img.shields.io/badge/PHP-0d1117?style=for-the-badge&logo=php&logoColor=777BB4" alt="PHP" />
+  <img src="https://img.shields.io/badge/Kali_Linux-0d1117?style=for-the-badge&logo=kalilinux&logoColor=557C94" alt="Kali Linux" />
+  <img src="https://img.shields.io/badge/Git-0d1117?style=for-the-badge&logo=git&logoColor=F05032" alt="Git" />
 </p>
-
-<table width="100%">
-  <tr>
-    <td width="20%" align="center"><strong>TypeScript</strong><br /><sub>85%</sub></td>
-    <td width="20%" align="center"><strong>HTML</strong><br /><sub>14%</sub></td>
-    <td width="20%" align="center"><strong>JavaScript</strong><br /><sub>1%</sub></td>
-    <td width="20%" align="center"><strong>Solidity</strong><br /><sub>Smart Contracts</sub></td>
-    <td width="20%" align="center"><strong>CSS / PHP</strong><br /><sub>Web & Backend</sub></td>
-  </tr>
-</table>
 
 ---
 
@@ -86,60 +50,36 @@ Status:   Building, breaking, and shipping in public</code></pre>
 <table width="100%">
   <tr>
     <td width="50%" valign="top">
-      <a href="https://github.com/Jaysonar07/WiseupAI">
-        <img src="https://github-readme-stats.vercel.app/api/pin/?username=Jaysonar07&repo=WiseupAI&bg_color=0d1117&border_color=30363d&title_color=38bdf8&icon_color=22d3ee&text_color=c9d1d9" width="100%" alt="WiseupAI" />
-      </a>
+      <h3><a href="https://github.com/Jaysonar07/WiseupAI">📁 WiseupAI</a></h3>
       <p>AI-powered budget tracker built for teens that gamifies personal finance and daily expense tracking.</p>
-      <p><img src="https://skillicons.dev/icons?i=ts,react,nodejs,tailwind&perline=6" height="26" alt="WiseupAI Tech Stack" /></p>
+      <p>
+        <img src="https://img.shields.io/badge/TypeScript-0d1117?style=flat-square&logo=typescript&logoColor=3178C6" alt="TypeScript" />
+        <img src="https://img.shields.io/badge/React-0d1117?style=flat-square&logo=react&logoColor=61DAFB" alt="React" />
+        <img src="https://img.shields.io/badge/Node.js-0d1117?style=flat-square&logo=nodedotjs&logoColor=339933" alt="Node.js" />
+      </p>
     </td>
     <td width="50%" valign="top">
-      <a href="https://github.com/Jaysonar07/Queuely">
-        <img src="https://github-readme-stats.vercel.app/api/pin/?username=Jaysonar07&repo=Queuely&bg_color=0d1117&border_color=30363d&title_color=38bdf8&icon_color=22d3ee&text_color=c9d1d9" width="100%" alt="Queuely" />
-      </a>
+      <h3><a href="https://github.com/Jaysonar07/Queuely">📁 Queuely</a></h3>
       <p>Smart real-time queue management and logging system engineered for event flow efficiency.</p>
-      <p><img src="https://skillicons.dev/icons?i=ts,react,express,postgres&perline=6" height="26" alt="Queuely Tech Stack" /></p>
+      <p>
+        <img src="https://img.shields.io/badge/TypeScript-0d1117?style=flat-square&logo=typescript&logoColor=3178C6" alt="TypeScript" />
+        <img src="https://img.shields.io/badge/React-0d1117?style=flat-square&logo=react&logoColor=61DAFB" alt="React" />
+        <img src="https://img.shields.io/badge/PostgreSQL-0d1117?style=flat-square&logo=postgresql&logoColor=4169E1" alt="PostgreSQL" />
+      </p>
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <a href="https://github.com/Jaysonar07/ScholarParchment">
-        <img src="https://github-readme-stats.vercel.app/api/pin/?username=Jaysonar07&repo=ScholarParchment&bg_color=0d1117&border_color=30363d&title_color=38bdf8&icon_color=22d3ee&text_color=c9d1d9" width="100%" alt="ScholarParchment" />
-      </a>
+      <h3><a href="https://github.com/Jaysonar07/ScholarParchment">📁 ScholarParchment</a></h3>
       <p>Academic document and credential management system built with modern TypeScript architecture.</p>
-      <p><img src="https://skillicons.dev/icons?i=ts,nextjs,tailwind,git&perline=6" height="26" alt="ScholarParchment Tech Stack" /></p>
+      <p>
+        <img src="https://img.shields.io/badge/TypeScript-0d1117?style=flat-square&logo=typescript&logoColor=3178C6" alt="TypeScript" />
+        <img src="https://img.shields.io/badge/Tailwind_CSS-0d1117?style=flat-square&logo=tailwindcss&logoColor=06B6D4" alt="Tailwind CSS" />
+      </p>
     </td>
     <td width="50%" valign="top">
-      <a href="https://github.com/Jaysonar07/Basic-Landing-page">
-        <img src="https://github-readme-stats.vercel.app/api/pin/?username=Jaysonar07&repo=Basic-Landing-page&bg_color=0d1117&border_color=30363d&title_color=38bdf8&icon_color=22d3ee&text_color=c9d1d9" width="100%" alt="Basic-Landing-page" />
-      </a>
+      <h3><a href="https://github.com/Jaysonar07/Basic-Landing-page">📁 Basic-Landing-page</a></h3>
       <p>Responsive animated landing page featuring smooth micro-interactions and modern UI styling.</p>
-      <p><img src="https://skillicons.dev/icons?i=ts,html,css,js&perline=6" height="26" alt="Basic-Landing-page Tech Stack" /></p>
-    </td>
-  </tr>
-</table>
-<!-- RECENT-PROJECTS-END -->
-
----
-
-<h2><code>$ git status --short</code></h2>
-
-<p align="center"><strong>working tree: clean · auto-synced contributions</strong></p>
-
-<p align="center">
-  <img height="170" src="https://github-readme-stats.vercel.app/api?username=Jaysonar07&show_icons=true&include_all_commits=true&count_private=true&bg_color=0d1117&border_color=30363d&title_color=38bdf8&icon_color=22d3ee&text_color=c9d1d9&hide_rank=false" alt="Jay Sonar Live GitHub Stats" />
-  <img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Jaysonar07&layout=compact&bg_color=0d1117&border_color=30363d&title_color=38bdf8&text_color=c9d1d9" alt="Jay Sonar Live Top Languages" />
-</p>
-
----
-
-<h2><code>$ git log --graph --all</code></h2>
-
-<p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=Jaysonar07&bg_color=0d1117&color=38bdf8&line=22d3ee&point=f472b6&area=true&hide_border=true" width="100%" alt="Jay Sonar Live Contribution Activity Graph" />
-</p>
-
----
-
-<h2><code>$ ssh jaysonar07@github</code></h2>
-
-<p>Ready to pair on a useful problem, review a systems decision, or ship the next small thing.</p>
+      <p>
+        <img src="https://img.shields.io/badge/TypeScript-0d1117?style=flat-square&logo=typescript&logoColor=3178C6" alt="TypeScript" />
+        <img src="
