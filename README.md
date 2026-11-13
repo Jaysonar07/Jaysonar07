@@ -1,12 +1,52 @@
 <div align="center">
 
-<!-- HERO-START -->
-<img src="./assets/hero.svg" width="100%" alt="Jay Sonar ASCII Portrait & Terminal Intro Card" />
-<!-- HERO-END -->
+<!-- Hermes Agent CLI Theme Header -->
+<p>
+  <img src="https://img.shields.io/badge/HERMES_AGENT_CLI-v2.0_%C2%B7_ACTIVE_SESSION-0d1117?style=for-the-badge&logo=gnubash&logoColor=F59E0B" alt="Hermes Agent CLI Theme" />
+</p>
+
+<!-- Animated Hermes CLI Boot Ticker -->
+<a href="https://github.com/Jaysonar07">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=16&pause=1000&color=F59E0B¢er=true&vCenter=true&width=680&lines=%5BHERMES_CLI%5D+Booting+agent+session+for+Jay+Sonar...;root%40jaysonar07%3A~%24+Cybersecurity+%26+Full-Stack+Engineer;root%40jaysonar07%3A~%24+Second-Year+CSIT+%40+SSPU+Pune;root%40jaysonar07%3A~%24+Building%2C+breaking+%26+shipping+in+public" alt="." />
+</a>
+
+<pre><code>
+       .---.              ██╗ █████╗ ██╗   ██╗    ███████╗ ██████╗ ███╗   ██╗ █████╗ ██████╗ 
+      /     \             ██║██╔══██╗╚██╗ ██╔╝    ██╔════╝██╔═══██╗████╗  ██║██╔══██╗██╔══██╗
+     | () () |            ██║███████║ ╚████╔╝     ███████╗██║   ██║██╔██╗ ██║███████║██████╔╝
+      \  ^  /        ██   ██║██╔══██║  ╚██╔╝      ╚════██║██║   ██║██║╚██╗██║██╔══██║██╔══██╗
+       |||||         ╚█████╔╝██║  ██║   ██║       ███████║╚██████╔╝██║ ╚████║██║  ██║██║  ██║
+      /|||||\         ╚════╝ ╚═╝  ╚═╝   ╚═╝       ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝
+     //|||||\\            ───────────────────────────────────────────────────────────────────
+    ///|||||\\\           [ hermes@jaysonar07 ] :: CYBERSECURITY & FULL-STACK ENGINEER
+</code></pre>
+
+<!-- TUI Terminal Intro Window -->
+<pre><code>╭────────────────────────────────────────────────────────────────────────╮
+│ ● ● ●   hermes-cli — jaysonar07@sspu-pune: ~                           │
+├────────────────────────────────────────────────────────────────────────┤
+│                                                                        │
+│  $ hermes --inspect-identity                                           │
+│                                                                        │
+│  agent   │ Jay Sonar (jaysonar07)                                      │
+│  role    │ Cybersecurity & Full-Stack Engineer                         │
+│  host    │ Symbiosis Skills & Professional University (CSIT '29)       │
+│  focus   │ AppSec · Pentesting · Full-Stack TypeScript · AI Agents     │
+│  stack   │ TypeScript · React · Node.js · PostgreSQL · Solidity        │
+│  status  │ [ONLINE] Building, breaking, and shipping in public         │
+│                                                                        │
+│  root@jaysonar07:~# █                                                  │
+╰────────────────────────────────────────────────────────────────────────╯</code></pre>
 
 <p>
-  <a href="https://github.com/Jaysonar07"><img src="https://img.shields.io/badge/GitHub-Jaysonar07-0d1117?style=for-the-badge&logo=github&logoColor=38bdf8" alt="GitHub" /></a>
-  <a href="https://www.linkedin.com/in/jay-sonar-573637275/"><img src="https://img.shields.io/badge/LinkedIn-Jay%20Sonar-0d1117?style=for-the-badge&logo=linkedin&logoColor=38bdf8" alt="LinkedIn" /></a>
+
+  <br />
+  <a href="https://github.com/Jaysonar07">
+    <img src="https://img.shields.io/badge/GitHub-@Jaysonar07-0d1117?style=for-the-badge&logo=github&logoColor=F59E0B" alt="GitHub" />
+  </a>
+  <a href="https://www.linkedin.com/in/jay-sonar-573637275/">
+    <img src="https://img.shields.io/badge/LinkedIn-Jay_Sonar-0d1117?style=for-the-badge&logo=linkedin&logoColor=F59E0B" alt="LinkedIn" />
+  </a>
 </p>
 
 </div>
@@ -34,13 +74,23 @@
   <img src="https://img.shields.io/badge/Node.js-0d1117?style=for-the-badge&logo=nodedotjs&logoColor=339933" alt="Node.js" />
   <img src="https://img.shields.io/badge/Express-0d1117?style=for-the-badge&logo=express&logoColor=ffffff" alt="Express" />
   <img src="https://img.shields.io/badge/PostgreSQL-0d1117?style=for-the-badge&logo=postgresql&logoColor=4169E1" alt="PostgreSQL" />
-  <img src="https://img.shields.io/badge/Solidity-0d1117?style=for-the-badge&logo=solidity&logoColor=38bdf8" alt="Solidity" />
+  <img src="https://img.shields.io/badge/Solidity-0d1117?style=for-the-badge&logo=solidity&logoColor=F59E0B" alt="Solidity" />
   <img src="https://img.shields.io/badge/HTML5-0d1117?style=for-the-badge&logo=html5&logoColor=E34F26" alt="HTML5" />
   <img src="https://img.shields.io/badge/CSS3-0d1117?style=for-the-badge&logo=css3&logoColor=1572B6" alt="CSS3" />
   <img src="https://img.shields.io/badge/PHP-0d1117?style=for-the-badge&logo=php&logoColor=777BB4" alt="PHP" />
   <img src="https://img.shields.io/badge/Kali_Linux-0d1117?style=for-the-badge&logo=kalilinux&logoColor=557C94" alt="Kali Linux" />
   <img src="https://img.shields.io/badge/Git-0d1117?style=for-the-badge&logo=git&logoColor=F05032" alt="Git" />
 </p>
+
+<table width="100%">
+  <tr>
+    <td width="20%" align="center"><strong>TypeScript</strong><br /><sub>85%</sub></td>
+    <td width="20%" align="center"><strong>HTML</strong><br /><sub>14%</sub></td>
+    <td width="20%" align="center"><strong>JavaScript</strong><br /><sub>1%</sub></td>
+    <td width="20%" align="center"><strong>Solidity</strong><br /><sub>Smart Contracts</sub></td>
+    <td width="20%" align="center"><strong>CSS / PHP</strong><br /><sub>Web & Backend</sub></td>
+  </tr>
+</table>
 
 ---
 
@@ -82,4 +132,55 @@
       <p>Responsive animated landing page featuring smooth micro-interactions and modern UI styling.</p>
       <p>
         <img src="https://img.shields.io/badge/TypeScript-0d1117?style=flat-square&logo=typescript&logoColor=3178C6" alt="TypeScript" />
-        <img src="
+        <img src="https://img.shields.io/badge/HTML5-0d1117?style=flat-square&logo=html5&logoColor=E34F26" alt="HTML5" />
+        <img src="https://img.shields.io/badge/CSS3-0d1117?style=flat-square&logo=css3&logoColor=1572B6" alt="CSS3" />
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- RECENT-PROJECTS-END -->
+
+---
+
+<h2><code>$ git status --short</code></h2>
+
+<p align="center"><strong>working tree: clean · live repository telemetry</strong></p>
+
+<p align="center">
+  <img src="https://img.shields.io/github/followers/Jaysonar07?label=Followers&style=for-the-badge&color=F59E0B&labelColor=0d1117&logo=github&logoColor=F59E0B" alt="GitHub Followers" />
+  <img src="https://img.shields.io/github/stars/Jaysonar07?label=Total%20Stars&style=for-the-badge&color=F59E0B&labelColor=0d1117&logo=github&logoColor=F59E0B" alt="GitHub Stars" />
+  <img src="https://img.shields.io/github/last-commit/Jaysonar07/Jaysonar07?label=Last%20Sync&style=for-the-badge&color=22C55E&labelColor=0d1117&logo=git&logoColor=22C55E" alt="Last Commit" />
+</p>
+
+---
+
+<h2><code>$ ssh jaysonar07@github</code></h2>
+
+<!-- Green TUI Terminal Contact Window -->
+<div align="center">
+<pre><code>╭────────────────────────────────────────────────────────────────────────╮
+│ ● ● ●   ssh session — jaysonar07@github [CONNECTED]                    │
+├────────────────────────────────────────────────────────────────────────┤
+│                                                                        │
+│  $ cat ./contact.sh                                                    │
+│                                                                        │
+│  #!/bin/bash                                                           │
+│  # Ready to pair on a problem, review a system, or ship a new build.   │
+│                                                                        │
+│  [+] USER     : Jay Sonar                                              │
+│  [+] GITHUB   : https://github.com/Jaysonar07                          │
+│  [+] LINKEDIN : https://www.linkedin.com/in/jay-sonar-573637275/       │
+│  [+] LOCATION : Pune, Maharashtra, India                               │
+│  [✓] STATUS   : Open to hackathons, security & full-stack collabs      │
+│                                                                        │
+╰────────────────────────────────────────────────────────────────────────╯</code></pre>
+
+<p>
+  <a href="https://github.com/Jaysonar07">
+    <img src="https://img.shields.io/badge/%3E_FOLLOW_ON_GITHUB-0d1117?style=for-the-badge&logo=github&logoColor=22C55E" alt="GitHub Contact" />
+  </a>
+  <a href="https://www.linkedin.com/in/jay-sonar-573637275/">
+    <img src="https://img.shields.io/badge/%3E_CONNECT_ON_LINKEDIN-0d1117?style=for-the-badge&logo=linkedin&logoColor=22C55E" alt="LinkedIn Contact" />
+  </a>
+</p>
+</div>
