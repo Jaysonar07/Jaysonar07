@@ -5,10 +5,7 @@
   <img src="https://img.shields.io/badge/HERMES_AGENT_CLI-v2.0_%C2%B7_ACTIVE_SESSION-0d1117?style=for-the-badge&logo=gnubash&logoColor=F59E0B" alt="Hermes Agent CLI Theme" />
 </p>
 
-<!-- Animated Hermes CLI Boot Ticker -->
-<a href="https://github.com/Jaysonar07">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=16&pause=1000&color=F59E0B¢er=true&vCenter=true&width=680&lines=%5BHERMES_CLI%5D+Booting+agent+session+for+Jay+Sonar...;root%40jaysonar07%3A~%24+Cybersecurity+%26+Full-Stack+Engineer;root%40jaysonar07%3A~%24+Second-Year+CSIT+%40+SSPU+Pune;root%40jaysonar07%3A~%24+Building%2C+breaking+%26+shipping+in+public" alt="." />
-</a>
+
 
 <pre><code>
        .---.              ██╗ █████╗ ██╗   ██╗    ███████╗ ██████╗ ███╗   ██╗ █████╗ ██████╗ 
