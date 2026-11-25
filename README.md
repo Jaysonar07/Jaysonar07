@@ -1,6 +1,6 @@
 <div align="center">
 
-<!-- Hermes Agent CLI Theme Header -->
+<!--  Agent CLI Theme Header -->
 <p>
   <img src="https://img.shields.io/badge/HERMES_AGENT_CLI-v2.0_%C2%B7_ACTIVE_SESSION-0d1117?style=for-the-badge&logo=gnubash&logoColor=F59E0B" alt="Hermes Agent CLI Theme" />
 </p>
@@ -15,7 +15,7 @@
        |||||         ╚█████╔╝██║  ██║   ██║       ███████║╚██████╔╝██║ ╚████║██║  ██║██║  ██║
       /|||||\         ╚════╝ ╚═╝  ╚═╝   ╚═╝       ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝
      //|||||\\            ───────────────────────────────────────────────────────────────────
-    ///|||||\\\           [ hermes@jaysonar07 ] :: CYBERSECURITY & FULL-STACK ENGINEER
+  ///|||||\\\           [ jaysonar2007@gmial.com ] :: CYBERSECURITY & FULL-STACK ENGINEER
 </code></pre>
 
 <!-- TUI Terminal Intro Window -->
