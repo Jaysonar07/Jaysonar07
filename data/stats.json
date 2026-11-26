@@ -1,10 +1,10 @@
 {
-  "total_contributions": 50,
+  "total_contributions": 39,
   "current_streak": 2,
-  "active_days": 14,
+  "active_days": 9,
   "window_days": 362,
-  "busiest_day": "Nov 13",
-  "busiest_day_count": 6,
+  "busiest_day": "Nov 26",
+  "busiest_day_count": 7,
   "monthly": [
     {
       "label": "Dec",
@@ -24,7 +24,7 @@
     },
     {
       "label": "Apr",
-      "count": 3
+      "count": 0
     },
     {
       "label": "May",
@@ -40,7 +40,7 @@
     },
     {
       "label": "Aug",
-      "count": 9
+      "count": 0
     },
     {
       "label": "Sep",
@@ -52,7 +52,7 @@
     },
     {
       "label": "Nov",
-      "count": 13
+      "count": 14
     }
   ],
   "weeks": [
@@ -241,7 +241,7 @@
       0,
       0,
       0,
-      2,
+      0,
       0,
       0
     ],
@@ -386,17 +386,17 @@
       0,
       0,
       0,
-      2,
+      0,
       0
     ],
     [
-      1,
-      0,
-      1,
       0,
       0,
       0,
-      3
+      0,
+      0,
+      0,
+      0
     ],
     [
       0,
