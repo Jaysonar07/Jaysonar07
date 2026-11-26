@@ -1,0 +1,162 @@
+name: Update Profile Cards
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-cards:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Refresh contribution stats JSON
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: ${{ github.repository_owner }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import urllib.request
+          from collections import defaultdict
+          from datetime import datetime, timezone
+
+          username = os.environ["USERNAME"]
+          featured = ["ScholarParchment", "WiseupAI", "Queuely", "CypherArena"]
+
+          query = """
+          query($login: String!) {
+            user(login: $login) {
+              contributionsCollection {
+                contributionCalendar {
+                  totalContributions
+                  weeks {
+                    contributionDays {
+                      date
+                      contributionCount
+                      contributionLevel
+                    }
+                  }
+                }
+              }
+              repositories(first: 30, ownerAffiliations: OWNER, isFork: false, orderBy: {field: PUSHED_AT, direction: DESC}) {
+                nodes {
+                  name
+                  stargazerCount
+                  forkCount
+                  primaryLanguage {
+                    name
+                    color
+                  }
+                }
+              }
+            }
+          }
+          """
+
+          req = urllib.request.Request(
+              "https://api.github.com/graphql",
+              data=json.dumps({"query": query, "variables": {"login": username}}).encode(),
+              headers={
+                  "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
+                  "Content-Type": "application/json",
+              },
+          )
+          with urllib.request.urlopen(req) as resp:
+              user = json.loads(resp.read())["data"]["user"]
+
+          cal = user["contributionsCollection"]["contributionCalendar"]
+          level_map = {
+              "NONE": 0,
+              "FIRST_QUARTILE": 1,
+              "SECOND_QUARTILE": 2,
+              "THIRD_QUARTILE": 3,
+              "FOURTH_QUARTILE": 4,
+          }
+
+          monthly_totals = defaultdict(int)
+          weekday_totals = defaultdict(int)
+          all_days = []
+          weeks_matrix = []
+
+          for w in cal["weeks"]:
+              week_levels = []
+              for d in w["contributionDays"]:
+                  dt = datetime.strptime(d["date"], "%Y-%m-%d")
+                  count = d["contributionCount"]
+                  monthly_totals[dt.strftime("%Y-%m")] += count
+                  weekday_totals[dt.strftime("%a")] += count
+                  all_days.append((d["date"], count))
+                  week_levels.append(level_map.get(d["contributionLevel"], 0))
+              weeks_matrix.append(week_levels)
+
+          streak = 0
+          today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+          for date_str, count in reversed(all_days):
+              if count > 0:
+                  streak += 1
+              elif date_str != today_str:
+                  break
+
+          active_days = sum(1 for _, c in all_days if c > 0)
+          busiest_day, busiest_count = max(weekday_totals.items(), key=lambda x: x[1], default=("N/A", 0))
+
+          sorted_months = sorted(monthly_totals.items())[-12:]
+          monthly_list = [
+              {"label": datetime.strptime(ym, "%Y-%m").strftime("%b"), "count": cnt}
+              for ym, cnt in sorted_months
+          ]
+
+          repo_stats = {}
+          for node in user["repositories"]["nodes"]:
+              if node["name"] in featured:
+                  lang = node.get("primaryLanguage") or {}
+                  repo_stats[node["name"]] = {
+                      "stars": node["stargazerCount"],
+                      "forks": node["forkCount"],
+                      "lang": lang.get("name") or "TypeScript",
+                      "lang_color": lang.get("color") or "#3178c6",
+                  }
+
+          os.makedirs("data", exist_ok=True)
+          with open("data/stats.json", "w", encoding="utf-8") as f:
+              json.dump(
+                  {
+                      "total_contributions": cal["totalContributions"],
+                      "current_streak": streak,
+                      "active_days": active_days,
+                      "busiest_day": busiest_day,
+                      "busiest_day_count": busiest_count,
+                      "monthly": monthly_list,
+                      "weeks": weeks_matrix[-52:],
+                      "repos": repo_stats,
+                  },
+                  f,
+                  indent=2,
+              )
+          PY
+
+      - name: Generate SVG cards
+        run: python scripts/generate_cards.py
+
+      - name: Commit and push updated cards
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/stats.json cards/*.svg
+          git diff --staged --quiet || (git commit -m "chore: refresh contribution cards" && git push)
