@@ -36,9 +36,6 @@ jobs:
           from collections import defaultdict
           from datetime import datetime, timezone
 
-          username = os.environ["USERNAME"]
-          featured = ["ScholarParchment", "WiseupAI", "Queuely", "CypherArena"]
-
           query = """
           query($login: String!) {
             user(login: $login) {
@@ -54,33 +51,21 @@ jobs:
                   }
                 }
               }
-              repositories(first: 30, ownerAffiliations: OWNER, isFork: false, orderBy: {field: PUSHED_AT, direction: DESC}) {
-                nodes {
-                  name
-                  stargazerCount
-                  forkCount
-                  primaryLanguage {
-                    name
-                    color
-                  }
-                }
-              }
             }
           }
           """
 
           req = urllib.request.Request(
               "https://api.github.com/graphql",
-              data=json.dumps({"query": query, "variables": {"login": username}}).encode(),
+              data=json.dumps({"query": query, "variables": {"login": os.environ["USERNAME"]}}).encode(),
               headers={
                   "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
                   "Content-Type": "application/json",
               },
           )
           with urllib.request.urlopen(req) as resp:
-              user = json.loads(resp.read())["data"]["user"]
+              cal = json.loads(resp.read())["data"]["user"]["contributionsCollection"]["contributionCalendar"]
 
-          cal = user["contributionsCollection"]["contributionCalendar"]
           level_map = {
               "NONE": 0,
               "FIRST_QUARTILE": 1,
@@ -90,17 +75,22 @@ jobs:
           }
 
           monthly_totals = defaultdict(int)
-          weekday_totals = defaultdict(int)
           all_days = []
           weeks_matrix = []
+          month_markers = []
+          seen_months = set()
 
-          for w in cal["weeks"]:
+          recent_weeks = cal["weeks"][-52:]
+          for wi, w in enumerate(recent_weeks):
               week_levels = []
               for d in w["contributionDays"]:
                   dt = datetime.strptime(d["date"], "%Y-%m-%d")
+                  ym = dt.strftime("%Y-%m")
+                  if ym not in seen_months and dt.day <= 7:
+                      seen_months.add(ym)
+                      month_markers.append({"week_idx": wi, "label": dt.strftime("%b")})
                   count = d["contributionCount"]
-                  monthly_totals[dt.strftime("%Y-%m")] += count
-                  weekday_totals[dt.strftime("%a")] += count
+                  monthly_totals[ym] += count
                   all_days.append((d["date"], count))
                   week_levels.append(level_map.get(d["contributionLevel"], 0))
               weeks_matrix.append(week_levels)
@@ -114,24 +104,14 @@ jobs:
                   break
 
           active_days = sum(1 for _, c in all_days if c > 0)
-          busiest_day, busiest_count = max(weekday_totals.items(), key=lambda x: x[1], default=("N/A", 0))
+          busiest_date, busiest_count = max(all_days, key=lambda x: x[1], default=("", 0))
+          busiest_label = datetime.strptime(busiest_date, "%Y-%m-%d").strftime("%b %d") if busiest_date else "N/A"
 
           sorted_months = sorted(monthly_totals.items())[-12:]
           monthly_list = [
               {"label": datetime.strptime(ym, "%Y-%m").strftime("%b"), "count": cnt}
               for ym, cnt in sorted_months
           ]
-
-          repo_stats = {}
-          for node in user["repositories"]["nodes"]:
-              if node["name"] in featured:
-                  lang = node.get("primaryLanguage") or {}
-                  repo_stats[node["name"]] = {
-                      "stars": node["stargazerCount"],
-                      "forks": node["forkCount"],
-                      "lang": lang.get("name") or "TypeScript",
-                      "lang_color": lang.get("color") or "#3178c6",
-                  }
 
           os.makedirs("data", exist_ok=True)
           with open("data/stats.json", "w", encoding="utf-8") as f:
@@ -140,11 +120,12 @@ jobs:
                       "total_contributions": cal["totalContributions"],
                       "current_streak": streak,
                       "active_days": active_days,
-                      "busiest_day": busiest_day,
+                      "window_days": len(all_days),
+                      "busiest_day": busiest_label,
                       "busiest_day_count": busiest_count,
                       "monthly": monthly_list,
-                      "weeks": weeks_matrix[-52:],
-                      "repos": repo_stats,
+                      "weeks": weeks_matrix,
+                      "month_markers": month_markers,
                   },
                   f,
                   indent=2,
@@ -159,4 +140,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/stats.json cards/*.svg
-          git diff --staged --quiet || (git commit -m "chore: refresh contribution cards" && git push)
+          git diff --staged --quiet || git commit -m "chore: refresh contribution cards"
+          git push

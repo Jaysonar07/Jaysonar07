@@ -2,8 +2,9 @@
   "total_contributions": 35,
   "current_streak": 2,
   "active_days": 9,
-  "busiest_day": "Tue",
-  "busiest_day_count": 14,
+  "window_days": 362,
+  "busiest_day": "Nov 13",
+  "busiest_day_count": 6,
   "monthly": [
     {
       "label": "Dec",
@@ -522,30 +523,54 @@
       2
     ]
   ],
-  "repos": {
-    "ScholarParchment": {
-      "stars": 1,
-      "forks": 0,
-      "lang": "TypeScript",
-      "lang_color": "#3178c6"
+  "month_markers": [
+    {
+      "week_idx": 0,
+      "label": "Dec"
     },
-    "WiseupAI": {
-      "stars": 1,
-      "forks": 0,
-      "lang": "TypeScript",
-      "lang_color": "#3178c6"
+    {
+      "week_idx": 4,
+      "label": "Jan"
     },
-    "Queuely": {
-      "stars": 1,
-      "forks": 0,
-      "lang": "TypeScript",
-      "lang_color": "#3178c6"
+    {
+      "week_idx": 9,
+      "label": "Feb"
     },
-    "CypherArena": {
-      "stars": 0,
-      "forks": 0,
-      "lang": "TypeScript",
-      "lang_color": "#3178c6"
+    {
+      "week_idx": 13,
+      "label": "Mar"
+    },
+    {
+      "week_idx": 17,
+      "label": "Apr"
+    },
+    {
+      "week_idx": 21,
+      "label": "May"
+    },
+    {
+      "week_idx": 26,
+      "label": "Jun"
+    },
+    {
+      "week_idx": 30,
+      "label": "Jul"
+    },
+    {
+      "week_idx": 34,
+      "label": "Aug"
+    },
+    {
+      "week_idx": 39,
+      "label": "Sep"
+    },
+    {
+      "week_idx": 43,
+      "label": "Oct"
+    },
+    {
+      "week_idx": 48,
+      "label": "Nov"
     }
-  }
+  ]
 }
