@@ -13,7 +13,7 @@
 <br />
 
 <div align="center">
-  <img src="./cards/activity.svg" width="100%" alt="Monthly Contributions &amp; Streak" />
+  <img src="./cards/stack.svg" width="100%" alt="Technologies I build with" />
 </div>
 
 <br />

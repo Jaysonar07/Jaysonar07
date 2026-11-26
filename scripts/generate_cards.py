@@ -85,6 +85,20 @@ PROFILE = {
             "lang": "TypeScript",
         },
     ],
+    "tech_stack": [
+        {"name": "TypeScript", "role": "PRIMARY · TYPESAFE", "icon": "typescript"},
+        {"name": "Python", "role": "AI & SECURITY", "icon": "python"},
+        {"name": "JavaScript", "role": "WEB · ES2024", "icon": "javascript"},
+        {"name": "React", "role": "UI LIBRARY", "icon": "react"},
+        {"name": "Next.js", "role": "FULL-STACK", "icon": "nextjs"},
+        {"name": "Node.js", "role": "BACKEND RUNTIME", "icon": "nodejs"},
+        {"name": "Solidity", "role": "SMART CONTRACTS", "icon": "solidity"},
+        {"name": "PostgreSQL", "role": "DATABASE", "icon": "postgresql"},
+        {"name": "PHP", "role": "SERVER & WEB", "icon": "php"},
+        {"name": "Tailwind CSS", "role": "STYLING", "icon": "tailwind"},
+        {"name": "Kali Linux", "role": "APPSEC & PENTEST", "icon": "kalilinux"},
+        {"name": "Git", "role": "VERSION CONTROL", "icon": "git"},
+    ],
 }
 
 
@@ -299,111 +313,105 @@ def render_tile(tile: dict, font_css: str, delay: float) -> str:
 </svg>"""
 
 
-def render_activity(stats: dict, font_css: str, delay: float) -> str:
+TECH_ICONS = {
+    "typescript": """
+      <rect x="2" y="2" width="20" height="20" rx="4" fill="#3178C6" />
+      <path d="M10.8 11.4H8.4v6.8H6.6v-6.8H4.2V9.9h6.6v1.5zm1.4 5.2c.5.3 1.2.5 1.9.5.8 0 1.2-.3 1.2-.8 0-.5-.4-.7-1.4-1.1-1.3-.5-2-1.1-2-2.3 0-1.3 1-2.2 2.7-2.2.8 0 1.5.2 2 .4l-.4 1.4c-.4-.2-1-.4-1.6-.4-.7 0-1.1.3-1.1.7 0 .5.4.7 1.5 1.1 1.3.5 1.9 1.2 1.9 2.3 0 1.3-1 2.3-2.9 2.3-.9 0-1.8-.2-2.2-.5l.4-1.4z" fill="#FFFFFF" />
+    """,
+    "python": """
+      <path d="M11.9 2C8.7 2 8.9 3.4 8.9 3.4v1.5h3.1v.5H6.5S4 5.1 4 8.4s2.2 3.2 2.2 3.2h1.3v-1.6s-.1-2.2 2.1-2.2h3.7s2 0 2-2V3.6S15.6 2 11.9 2zm-1.8 1.1c.4 0 .7.3.7.7s-.3.7-.7.7-.7-.3-.7-.7.3-.7.7-.7z" fill="#3776AB" />
+      <path d="M12.1 22c3.2 0 3-1.4 3-1.4v-1.5H12v-.5h5.5s2.5.3 2.5-3-2.2-3.2-2.2-3.2h-1.3V14s.1 2.2-2.1 2.2h-3.7s-2 0-2 2v2.2S8.4 22 12.1 22zm1.8-1.1c-.4 0-.7-.3-.7-.7s.3-.7.7-.7.7.3.7.7-.3.7-.7.7z" fill="#EAB308" />
+    """,
+    "javascript": """
+      <rect x="2" y="2" width="20" height="20" rx="4" fill="#FACC15" />
+      <path d="M11.1 16.4c0 1.7-1 2.5-2.5 2.5-1 0-1.8-.4-2.2-1.1l1.2-.8c.2.4.5.7 1 .7.5 0 .8-.2.8-.9v-4.9h1.7v4.5zm2.1.3c.4.6 1 .9 1.9.9.8 0 1.3-.3 1.3-.8 0-.5-.4-.8-1.4-1.2l-.5-.2c-1.4-.5-2.2-1.2-2.2-2.5 0-1.2 1-2.1 2.6-2.1 1.1 0 1.9.4 2.5 1.3l-1.3.8c-.3-.5-.7-.7-1.2-.7-.5 0-.9.3-.9.7 0 .5.3.7 1.3 1.1l.5.2c1.6.6 2.4 1.3 2.4 2.6 0 1.5-1.2 2.3-2.9 2.3-1.6 0-2.6-.7-3.1-1.6l1.2-.8z" fill="#141413" />
+    """,
+    "react": """
+      <circle cx="12" cy="12" r="2.1" fill="#0EA5E9" />
+      <ellipse cx="12" cy="12" rx="9.5" ry="3.8" fill="none" stroke="#0EA5E9" stroke-width="1.4" />
+      <ellipse cx="12" cy="12" rx="9.5" ry="3.8" fill="none" stroke="#0EA5E9" stroke-width="1.4" transform="rotate(60 12 12)" />
+      <ellipse cx="12" cy="12" rx="9.5" ry="3.8" fill="none" stroke="#0EA5E9" stroke-width="1.4" transform="rotate(120 12 12)" />
+    """,
+    "nextjs": """
+      <circle cx="12" cy="12" r="9.8" fill="#141413" />
+      <path d="M8.5 16.2V8.2h1.4l5.8 7.5-.9.7-4.9-6.3v6.1H8.5zm5.6-8h1.4v5.2h-1.4V8.2z" fill="#F4F3EF" />
+    """,
+    "nodejs": """
+      <polygon points="12,2.2 20.5,7.1 20.5,16.9 12,21.8 3.5,16.9 3.5,7.1" fill="#16A34A" />
+      <path d="M9.2 15.2V8.8h1.5l2.7 4.1V8.8h1.4v6.4h-1.5l-2.7-4.1v4.1H9.2z" fill="#FFFFFF" />
+    """,
+    "solidity": """
+      <polygon points="12,2 6.8,10.2 12,13.1 17.2,10.2" fill="#3F3F3C" />
+      <polygon points="12,2 12,13.1 17.2,10.2" fill="#141413" />
+      <polygon points="12,22 6.8,13.8 12,16.7 17.2,13.8" fill="#73726E" />
+      <polygon points="12,22 12,16.7 17.2,13.8" fill="#3F3F3C" />
+    """,
+    "postgresql": """
+      <path d="M16.8 4.4c-1.4-.9-3.1-.8-4.8-.1-1.7-.7-3.4-.8-4.8.1C5 5.8 4.4 9 5.5 11.7c.7 1.8 2 3.1 3.3 3.7v3.1c0 .9.7 1.5 1.5 1.5h.9c.7 0 1.2-.5 1.2-1.2v-2.2c.9-.1 1.7-.5 2.4-1.1l1.2 2.4c.3.6 1 .8 1.6.5.6-.3.8-1 .5-1.6l-1.3-2.6c1.1-1.2 1.8-2.9 1.8-4.7 0-2.4-.7-4.1-1.8-5.1z" fill="#2563EB" />
+      <circle cx="9.6" cy="8.5" r="0.9" fill="#FFFFFF" />
+      <circle cx="14.4" cy="8.5" r="0.9" fill="#FFFFFF" />
+    """,
+    "php": """
+      <ellipse cx="12" cy="12" rx="10" ry="6.2" fill="#6366F1" />
+      <path d="M5.4 14.3l.9-4.6h1.9c1 0 1.6.5 1.4 1.5-.2 1-.9 1.6-2 1.6H6.7l-.3 1.5h-1zm1.5-2.4h.7c.5 0 .8-.2.9-.7.1-.4-.1-.6-.6-.6h-.7l-.3 1.3zm3.2 2.4l.9-4.6h1l-.3 1.4h.9c.9 0 1.4.4 1.2 1.3l-.4 1.9h-1l.4-1.8c.1-.4-.1-.6-.5-.6h-.7l-.5 2.4h-1zm4.5 0l.9-4.6h1.9c1 0 1.6.5 1.4 1.5-.2 1-.9 1.6-2 1.6h-.9l-.3 1.5h-1zm1.5-2.4h.7c.5 0 .8-.2.9-.7.1-.4-.1-.6-.6-.6h-.7l-.3 1.3z" fill="#FFFFFF" />
+    """,
+    "tailwind": """
+      <path d="M12 6c-2.7 0-4.3 1.3-5 4 1-1.3 2.2-1.8 3.5-1.5.8.2 1.3.7 1.9 1.3 1 1 2.1 2.2 4.6 2.2 2.7 0 4.3-1.3 5-4-1 1.3-2.2 1.8-3.5 1.5-.8-.2-1.3-.7-1.9-1.3C15.6 7.2 14.5 6 12 6zm-5 6c-2.7 0-4.3 1.3-5 4 1-1.3 2.2-1.8 3.5-1.5.8.2 1.3.7 1.9 1.3 1 1 2.1 2.2 4.6 2.2 2.7 0 4.3-1.3 5-4-1 1.3-2.2 1.8-3.5 1.5-.8-.2-1.3-.7-1.9-1.3-1-1-2.1-2.2-4.6-2.2z" fill="#0284C7" />
+    """,
+    "kalilinux": """
+      <path d="M12 2.2L4.2 5.6v5.9c0 4.9 3.3 9.2 7.8 10.5 4.5-1.3 7.8-5.6 7.8-10.5V5.6L12 2.2z" fill="#141413" />
+      <path d="M8.4 9.5l3.1 2.4-3.1 2.4M12.5 14.5h3.2" fill="none" stroke="#2563EB" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+    """,
+    "git": """
+      <rect x="4.5" y="4.5" width="15" height="15" rx="3" transform="rotate(45 12 12)" fill="#EA580C" />
+      <circle cx="10.2" cy="9.2" r="1.3" fill="#FFFFFF" />
+      <circle cx="10.2" cy="14.8" r="1.3" fill="#FFFFFF" />
+      <circle cx="14.6" cy="12" r="1.3" fill="#FFFFFF" />
+      <path d="M10.2 10.5v3M10.8 9.8l3 1.7" stroke="#FFFFFF" stroke-width="1.3" stroke-linecap="round" />
+    """,
+}
+
+
+def render_stack(font_css: str, delay: float) -> str:
     w, h = 900, 356
-    months = stats["monthly"][-12:]
-    max_val = max((m["count"] for m in months), default=1) or 1
-    peak_idx = max(range(len(months)), key=lambda i: months[i]["count"], default=0)
+    items = PROFILE["tech_stack"]
+    cols = 4
+    start_x, start_y = 46, 134
+    cell_w, cell_h = 193, 60
+    gap_x, gap_y = 12, 12
 
-    chart_x, chart_y, chart_w, chart_h = 46, 174, 540, 124
-    bar_slot = chart_w / max(len(months), 1)
-    bar_w = min(36, bar_slot * 0.74)
+    tiles_svg = []
+    for idx, item in enumerate(items):
+        row = idx // cols
+        col = idx % cols
+        x = start_x + col * (cell_w + gap_x)
+        y = start_y + row * (cell_h + gap_y)
+        item_delay = delay + 0.12 + row * 0.08 + col * 0.04
+        icon_inner = TECH_ICONS.get(item["icon"], "")
 
-    anim_bars = []
-    static_bars = []
-    for idx, m in enumerate(months):
-        count = m["count"]
-        ratio = count / max_val
-        bh = 5 if count == 0 else max(12, round(ratio * chart_h))
-        bx = chart_x + idx * bar_slot + (bar_slot - bar_w) / 2
-        by = chart_y + chart_h - bh
-        bar_delay = delay + 0.16 + idx * 0.04
-
-        is_peak = idx == peak_idx and count > 0
-        is_last = idx == len(months) - 1 and not is_peak
-        if count == 0:
-            fill = THEME["border"]
-        elif is_peak:
-            fill = THEME["accent"]
-        elif is_last:
-            fill = THEME["bar_current"]
-        else:
-            fill = THEME["bar_default"]
-
-        label = f'<text x="{bx + bar_w / 2:.1f}" y="{chart_y + chart_h + 22}" text-anchor="middle" fill="{THEME["text_muted"]}" font-size="11" class="mono">{esc(m["label"])}</text>'
-        peak_static = ""
-        peak_anim = ""
-        if is_peak:
-            peak_static = (
-                f'<text x="{bx + bar_w / 2:.1f}" y="{by - 10:.1f}" text-anchor="middle" '
-                f'fill="{THEME["accent"]}" font-size="11.5" font-weight="600" class="mono">{count:,}</text>'
-            )
-            peak_anim = (
-                f'<text x="{bx + bar_w / 2:.1f}" y="{by - 10:.1f}" text-anchor="middle" '
-                f'fill="{THEME["accent"]}" font-size="11.5" font-weight="600" class="mono reveal" '
-                f'style="animation-delay:{bar_delay + 0.25:.2f}s">{count:,}</text>'
-            )
-
-        static_bars.append(f"""
-        {peak_static}
-        <rect x="{bx:.1f}" y="{by:.1f}" width="{bar_w:.1f}" height="{bh}" rx="5" fill="{fill}" />
-        {label}""")
-
-        if not STATIC:
-            smil = f"""
-            <animate attributeName="height" from="0" to="{bh}" dur="0.65s" begin="{bar_delay:.2f}s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" />
-            <animate attributeName="y" from="{chart_y + chart_h}" to="{by:.1f}" dur="0.65s" begin="{bar_delay:.2f}s" fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" />"""
-            anim_bars.append(f"""
-        {peak_anim}
-        <rect x="{bx:.1f}" y="{chart_y + chart_h}" width="{bar_w:.1f}" height="0" rx="5" fill="{fill}">{smil}
-        </rect>
-        {label}""")
-
-    if STATIC:
-        bars_block = "".join(static_bars)
-    else:
-        bars_block = f"""
-  <g class="anim-only">
-    {''.join(anim_bars)}
-  </g>
-  <g class="reduced-only">
-    {''.join(static_bars)}
-  </g>"""
-
-    rx = 656
-    total_days = stats.get("window_days", 365)
-    streak = stats["current_streak"]
-    streak_unit = "day" if streak == 1 else "days"
+        tiles_svg.append(f"""
+  <g {anim_attr(item_delay)}>
+    <rect x="{x}" y="{y}" width="{cell_w}" height="{cell_h}" rx="12" fill="#ECEAE3" fill-opacity="0.55" stroke="{THEME['border']}" />
+    <rect x="{x + 11}" y="{y + 12}" width="36" height="36" rx="9" fill="#FFFFFF" stroke="{THEME['border']}" />
+    <svg x="{x + 19}" y="{y + 20}" width="20" height="20" viewBox="0 0 24 24">
+      {icon_inner}
+    </svg>
+    <text x="{x + 57}" y="{y + 28}" fill="{THEME['text_primary']}" font-size="14" font-weight="600" class="sans">{esc(item['name'])}</text>
+    <text x="{x + 57}" y="{y + 44}" fill="{THEME['text_muted']}" font-size="9.2" class="mono" letter-spacing="0.06em">{esc(item['role'])}</text>
+  </g>""")
 
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" fill="none">
   {base_style(font_css)}
   <rect x="0.5" y="0.5" width="{w-1}" height="{h-1}" rx="18" fill="{THEME['bg']}" stroke="{THEME['border']}" />
 
-  <!-- Top Left Heading -->
   <g {anim_attr(delay)}>
-    <text x="46" y="64" fill="{THEME['text_muted']}" font-size="11" class="mono" letter-spacing="0.14em">THE LAST 12 MONTHS ON GITHUB</text>
-    <text x="46" y="116" fill="{THEME['text_primary']}" font-size="48" class="serif" letter-spacing="-0.02em">{stats['total_contributions']:,} <tspan class="serif-italic">contributions</tspan></text>
+    <rect x="46" y="42" width="8" height="8" rx="2" fill="{THEME['accent']}" />
+    <text x="62" y="49.5" fill="{THEME['text_muted']}" font-size="11" class="mono" letter-spacing="0.14em">TOOLCHAIN &amp; LANGUAGES</text>
+    <text x="854" y="49.5" text-anchor="end" fill="{THEME['text_muted']}" font-size="11" class="mono" letter-spacing="0.14em">FULL-STACK · SECURITY · AI</text>
+    <text x="46" y="102" fill="{THEME['text_primary']}" font-size="44" class="serif" letter-spacing="-0.02em">Technologies I <tspan fill="{THEME['accent']}" class="serif-italic">build with</tspan></text>
   </g>
 
-  {bars_block}
-
-  <!-- Right Column KPI Stack -->
-  <g {anim_attr(delay + 0.15)}>
-    <text x="{rx}" y="106" fill="{THEME['text_primary']}" font-size="42" class="serif">{streak} <tspan class="serif-italic">{streak_unit}</tspan></text>
-    <text x="{rx}" y="128" fill="{THEME['text_muted']}" font-size="13" class="sans">current streak</text>
-    <line x1="{rx}" y1="148" x2="854" y2="148" stroke="{THEME['border']}" />
-  </g>
-
-  <g {anim_attr(delay + 0.25)}>
-    <text x="{rx}" y="198" fill="{THEME['text_primary']}" font-size="42" class="serif">{stats['active_days']} <tspan fill="#9E9D99">/ {total_days}</tspan></text>
-    <text x="{rx}" y="220" fill="{THEME['text_muted']}" font-size="13" class="sans">days with a commit</text>
-    <line x1="{rx}" y1="240" x2="854" y2="240" stroke="{THEME['border']}" />
-  </g>
-
-  <g {anim_attr(delay + 0.35)}>
-    <text x="{rx}" y="290" fill="{THEME['text_primary']}" font-size="42" class="serif">{stats['busiest_day_count']}</text>
-    <text x="{rx}" y="312" fill="{THEME['text_muted']}" font-size="13" class="sans">on the busiest day ({esc(stats['busiest_day'])})</text>
-  </g>
+  {''.join(tiles_svg)}
 </svg>"""
 
 
@@ -539,11 +547,10 @@ def main() -> None:
         + PROFILE["url_label"]
         + "".join(t["kicker"] + t["title"] + t["sub"] for t in PROFILE["tiles"])
         + "".join(r["kicker"] + r["name"] + r["desc"] + r["lang"] for r in PROFILE["featured_repos"])
-        + "THE LAST 12 MONTHS ON GITHUB contributions day days current streak / days with a commit on the busiest day"
+        + "".join(s["name"] + s["role"] for s in PROFILE["tech_stack"])
+        + "TOOLCHAIN & LANGUAGES FULL-STACK · SECURITY · AI Technologies I build with"
         + "Every day, in blue REFRESHED DAILY less more ↗ @%#*+=-:. ..."
-        + "".join(m["label"] + f"{m['count']:,}" for m in stats["monthly"])
         + "".join(m["label"] for m in stats.get("month_markers", []))
-        + f"{stats['total_contributions']:,}{stats['current_streak']}{stats['active_days']}{stats.get('window_days', 365)}{stats['busiest_day']}{stats['busiest_day_count']}"
         + "0123456789"
     )
 
@@ -558,11 +565,11 @@ def main() -> None:
         "tile-1.svg": render_tile(PROFILE["tiles"][0], font_css, delay=0.30),
         "tile-2.svg": render_tile(PROFILE["tiles"][1], font_css, delay=0.40),
         "tile-3.svg": render_tile(PROFILE["tiles"][2], font_css, delay=0.50),
-        "activity.svg": render_activity(stats, font_css, delay=0.60),
-        "repo-1.svg": render_repo(PROFILE["featured_repos"][0], font_css, delay=0.85),
-        "repo-2.svg": render_repo(PROFILE["featured_repos"][1], font_css, delay=0.95),
-        "repo-3.svg": render_repo(PROFILE["featured_repos"][2], font_css, delay=1.05),
-        "heatmap.svg": render_heatmap(stats, font_css, delay=1.15),
+        "stack.svg": render_stack(font_css, delay=0.60),
+        "repo-1.svg": render_repo(PROFILE["featured_repos"][0], font_css, delay=0.90),
+        "repo-2.svg": render_repo(PROFILE["featured_repos"][1], font_css, delay=1.00),
+        "repo-3.svg": render_repo(PROFILE["featured_repos"][2], font_css, delay=1.10),
+        "heatmap.svg": render_heatmap(stats, font_css, delay=1.20),
     }
 
     for filename, svg in outputs.items():
