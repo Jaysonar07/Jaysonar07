@@ -3,6 +3,12 @@ name: Update Profile Cards
 on:
   schedule:
     - cron: "0 0 * * *"
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "cards/**"
+      - "data/stats.json"
   workflow_dispatch:
 
 permissions:
@@ -10,6 +16,7 @@ permissions:
 
 jobs:
   build-cards:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -26,20 +33,47 @@ jobs:
 
       - name: Refresh contribution stats JSON
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
         run: |
           python - <<'PY'
           import json
           import os
+          import urllib.error
           import urllib.request
           from collections import defaultdict
           from datetime import datetime, timezone
+
+          token = os.environ["GH_TOKEN"]
+          username = os.environ["USERNAME"]
+          headers = {
+              "Authorization": f"Bearer {token}",
+              "Content-Type": "application/json",
+              "Accept": "application/vnd.github+json",
+          }
+
+          def gh_graphql(query, variables=None):
+              req = urllib.request.Request(
+                  "https://api.github.com/graphql",
+                  data=json.dumps({"query": query, "variables": variables or {}}).encode(),
+                  headers=headers,
+              )
+              with urllib.request.urlopen(req) as resp:
+                  return json.loads(resp.read())["data"]
+
+          def gh_rest(path):
+              req = urllib.request.Request(f"https://api.github.com/{path}", headers=headers)
+              try:
+                  with urllib.request.urlopen(req) as resp:
+                      return json.loads(resp.read())
+              except urllib.error.HTTPError:
+                  return []
 
           query = """
           query($login: String!) {
             user(login: $login) {
               contributionsCollection {
+                restrictedContributionsCount
                 contributionCalendar {
                   totalContributions
                   weeks {
@@ -51,28 +85,57 @@ jobs:
                   }
                 }
               }
+              repositories(first: 50, ownerAffiliations: OWNER, isFork: false) {
+                nodes {
+                  name
+                  isPrivate
+                  createdAt
+                }
+              }
             }
           }
           """
 
-          req = urllib.request.Request(
-              "https://api.github.com/graphql",
-              data=json.dumps({"query": query, "variables": {"login": os.environ["USERNAME"]}}).encode(),
-              headers={
-                  "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
-                  "Content-Type": "application/json",
-              },
-          )
-          with urllib.request.urlopen(req) as resp:
-              cal = json.loads(resp.read())["data"]["user"]["contributionsCollection"]["contributionCalendar"]
+          user = gh_graphql(query, {"login": username})["user"]
+          cal = user["contributionsCollection"]["contributionCalendar"]
+          restricted = user["contributionsCollection"]["restrictedContributionsCount"]
 
-          level_map = {
-              "NONE": 0,
-              "FIRST_QUARTILE": 1,
-              "SECOND_QUARTILE": 2,
-              "THIRD_QUARTILE": 3,
-              "FOURTH_QUARTILE": 4,
-          }
+          day_counts = {}
+          for w in cal["weeks"]:
+              for d in w["contributionDays"]:
+                  day_counts[d["date"]] = d["contributionCount"]
+
+          extra_total = 0
+          if restricted == 0:
+              min_date = cal["weeks"][0]["contributionDays"][0]["date"]
+              max_date = cal["weeks"][-1]["contributionDays"][-1]["date"]
+              for repo in user["repositories"]["nodes"]:
+                  if not repo["isPrivate"]:
+                      continue
+                  cdate = repo["createdAt"][:10]
+                  if min_date <= cdate <= max_date:
+                      day_counts[cdate] = day_counts.get(cdate, 0) + 1
+                      extra_total += 1
+                  for c in gh_rest(f"repos/{username}/{repo['name']}/commits?per_page=100"):
+                      if not isinstance(c, dict):
+                          continue
+                      author = c.get("author") or {}
+                      if author.get("login") == username:
+                          dt_str = c["commit"]["author"]["date"][:10]
+                          if min_date <= dt_str <= max_date:
+                              day_counts[dt_str] = day_counts.get(dt_str, 0) + 1
+                              extra_total += 1
+
+          def level_for(cnt):
+              if cnt <= 0:
+                  return 0
+              if cnt == 1:
+                  return 1
+              if cnt <= 3:
+                  return 2
+              if cnt <= 5:
+                  return 3
+              return 4
 
           monthly_totals = defaultdict(int)
           all_days = []
@@ -84,15 +147,16 @@ jobs:
           for wi, w in enumerate(recent_weeks):
               week_levels = []
               for d in w["contributionDays"]:
-                  dt = datetime.strptime(d["date"], "%Y-%m-%d")
+                  date_str = d["date"]
+                  cnt = day_counts.get(date_str, 0)
+                  dt = datetime.strptime(date_str, "%Y-%m-%d")
                   ym = dt.strftime("%Y-%m")
                   if ym not in seen_months and dt.day <= 7:
                       seen_months.add(ym)
                       month_markers.append({"week_idx": wi, "label": dt.strftime("%b")})
-                  count = d["contributionCount"]
-                  monthly_totals[ym] += count
-                  all_days.append((d["date"], count))
-                  week_levels.append(level_map.get(d["contributionLevel"], 0))
+                  monthly_totals[ym] += cnt
+                  all_days.append((date_str, cnt))
+                  week_levels.append(level_for(cnt))
               weeks_matrix.append(week_levels)
 
           streak = 0
@@ -117,7 +181,7 @@ jobs:
           with open("data/stats.json", "w", encoding="utf-8") as f:
               json.dump(
                   {
-                      "total_contributions": cal["totalContributions"],
+                      "total_contributions": cal["totalContributions"] + extra_total,
                       "current_streak": streak,
                       "active_days": active_days,
                       "window_days": len(all_days),
@@ -140,5 +204,4 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/stats.json cards/*.svg
-          git diff --staged --quiet || git commit -m "chore: refresh contribution cards"
-          git push
+          git diff --staged --quiet || (git commit -m "chore: refresh contribution cards" && git push)

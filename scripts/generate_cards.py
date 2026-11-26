@@ -444,69 +444,72 @@ def render_repo(repo: dict, font_css: str, delay: float) -> str:
 
 
 def render_heatmap(stats: dict, font_css: str, delay: float) -> str:
-    w, h = 900, 294
+    w, h = 900, 288
     weeks = stats["weeks"][-52:]
     month_markers = stats.get("month_markers", [])
-    cell = 13.5
-    gap = 3.2
+    cell = 12.6
+    gap = 3.0
+    step = cell + gap
     start_x = 46
-    start_y = 112
+    start_y = 114
     palette = THEME["heatmap"]
 
     cells = []
     for wi, week in enumerate(weeks):
         col_delay = delay + 0.12 + wi * 0.012
         for di, level in enumerate(week[:7]):
-            cx = start_x + wi * (cell + gap)
-            cy = start_y + di * (cell + gap)
+            cx = start_x + wi * step
+            cy = start_y + di * step
             color = palette[min(max(int(level), 0), len(palette) - 1)]
             cls = "" if STATIC else "cell-pop"
             style = "" if STATIC else f'style="animation-delay:{col_delay:.2f}s"'
             cells.append(
-                f'<rect x="{cx:.1f}" y="{cy:.1f}" width="{cell}" height="{cell}" rx="3" '
+                f'<rect x="{cx:.1f}" y="{cy:.1f}" width="{cell}" height="{cell}" rx="2.8" '
                 f'fill="{color}" class="{cls}" {style} />'
             )
 
     months_svg = []
+    month_y = start_y + 7 * step + 22
     if month_markers:
         for m in month_markers:
-            mx = start_x + m["week_idx"] * (cell + gap)
+            mx = start_x + m["week_idx"] * step
             months_svg.append(
-                f'<text x="{mx:.1f}" y="{start_y + 7 * (cell + gap) + 22:.1f}" '
+                f'<text x="{mx:.1f}" y="{month_y:.1f}" '
                 f'fill="{THEME["text_muted"]}" font-size="11" class="mono">{esc(m["label"])}</text>'
             )
     else:
         fallback_months = ["Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"]
         for i, lbl in enumerate(fallback_months):
-            mx = start_x + int(i * 4.3) * (cell + gap)
+            mx = start_x + int(i * 4.3) * step
             months_svg.append(
-                f'<text x="{mx:.1f}" y="{start_y + 7 * (cell + gap) + 22:.1f}" '
+                f'<text x="{mx:.1f}" y="{month_y:.1f}" '
                 f'fill="{THEME["text_muted"]}" font-size="11" class="mono">{lbl}</text>'
             )
 
-    legend_y = start_y + 7 * (cell + gap) + 11
+    legend_y = 78
     legend = "".join(
-        f'<rect x="{758 + i * 14}" y="{legend_y:.1f}" width="11" height="11" rx="2.5" fill="{c}" />'
+        f'<rect x="{748 + i * 14}" y="{legend_y}" width="11" height="11" rx="2.5" fill="{c}" />'
         for i, c in enumerate(palette)
     )
+
+    total = stats.get("total_contributions", 0)
+    contrib_word = "contribution" if total == 1 else "contributions"
 
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" fill="none">
   {base_style(font_css)}
   <rect x="0.5" y="0.5" width="{w-1}" height="{h-1}" rx="18" fill="{THEME['bg']}" stroke="{THEME['border']}" />
 
   <g {anim_attr(delay)}>
-    <text x="46" y="76" fill="{THEME['text_primary']}" font-size="40" class="serif" letter-spacing="-0.02em">Every day, <tspan fill="{THEME['accent']}" class="serif-italic">in blue</tspan></text>
-    <text x="854" y="72" text-anchor="end" fill="{THEME['text_muted']}" font-size="11" class="mono" letter-spacing="0.14em">REFRESHED DAILY</text>
+    <text x="46" y="66" fill="{THEME['text_primary']}" font-size="38" class="serif" letter-spacing="-0.02em">Every day, <tspan fill="{THEME['accent']}" class="serif-italic">in blue</tspan></text>
+    <text x="46" y="90" fill="{THEME['text_muted']}" font-size="11.5" class="mono">{total:,} {contrib_word} in the last year</text>
+    <text x="854" y="54" text-anchor="end" fill="{THEME['text_muted']}" font-size="11" class="mono" letter-spacing="0.14em">REFRESHED DAILY</text>
+    <text x="740" y="{legend_y + 9.5:.1f}" text-anchor="end" fill="{THEME['text_muted']}" font-size="10.5" class="mono">less</text>
+    {legend}
+    <text x="854" y="{legend_y + 9.5:.1f}" text-anchor="end" fill="{THEME['text_muted']}" font-size="10.5" class="mono">more</text>
   </g>
 
   {''.join(cells)}
   {''.join(months_svg)}
-
-  <g {anim_attr(delay + 0.55)}>
-    <text x="748" y="{legend_y + 9.5:.1f}" text-anchor="end" fill="{THEME['text_muted']}" font-size="11" class="mono">less</text>
-    {legend}
-    <text x="836" y="{legend_y + 9.5:.1f}" fill="{THEME['text_muted']}" font-size="11" class="mono">more</text>
-  </g>
 </svg>"""
 
 
@@ -549,8 +552,9 @@ def main() -> None:
         + "".join(r["kicker"] + r["name"] + r["desc"] + r["lang"] for r in PROFILE["featured_repos"])
         + "".join(s["name"] + s["role"] for s in PROFILE["tech_stack"])
         + "TOOLCHAIN & LANGUAGES FULL-STACK · SECURITY · AI Technologies I build with"
-        + "Every day, in blue REFRESHED DAILY less more ↗ @%#*+=-:. ..."
+        + "Every day, in blue REFRESHED DAILY contribution contributions in the last year less more ↗ @%#*+=-:. ..."
         + "".join(m["label"] for m in stats.get("month_markers", []))
+        + f"{stats.get('total_contributions', 0):,}"
         + "0123456789"
     )
 
