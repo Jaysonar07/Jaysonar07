@@ -9,6 +9,7 @@ on:
     paths-ignore:
       - "cards/**"
       - "data/stats.json"
+      - "assets/avatar.png"
   workflow_dispatch:
 
 permissions:
@@ -72,6 +73,7 @@ jobs:
           query = """
           query($login: String!) {
             user(login: $login) {
+              avatarUrl
               contributionsCollection {
                 restrictedContributionsCount
                 contributionCalendar {
@@ -97,6 +99,12 @@ jobs:
           """
 
           user = gh_graphql(query, {"login": username})["user"]
+          if user.get("avatarUrl"):
+              os.makedirs("assets", exist_ok=True)
+              with urllib.request.urlopen(user["avatarUrl"]) as img_resp:
+                  with open("assets/avatar.png", "wb") as img_f:
+                      img_f.write(img_resp.read())
+
           cal = user["contributionsCollection"]["contributionCalendar"]
           restricted = user["contributionsCollection"]["restrictedContributionsCount"]
 
@@ -203,5 +211,5 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/stats.json cards/*.svg
+          git add data/stats.json assets/avatar.png cards/*.svg
           git diff --staged --quiet || (git commit -m "chore: refresh contribution cards" && git push)
