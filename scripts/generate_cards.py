@@ -18,9 +18,11 @@ from fontTools.subset import Options, Subsetter
 from fontTools.ttLib import TTFont
 
 try:
-    from PIL import Image, ImageOps
+    from PIL import Image, ImageEnhance, ImageOps
 except ImportError:
     Image = None
+    ImageEnhance = None
+    ImageOps = None
 
 STATIC = os.getenv("STATIC", "0") == "1"
 ROOT = Path(__file__).resolve().parent.parent
@@ -135,27 +137,42 @@ def build_subset_font_css(
     )
 
 
+ASCII_RAMP = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. "
+
+
 def build_ascii_portrait_svg(x: int, y: int, delay: float) -> str:
-    """Converts assets/avatar.png into crisp SVG ASCII art lines, or renders a fallback ASCII emblem."""
-    ramp = "@%#*+=-:. "
+    """Converts assets/avatar.png into high-detail SVG ASCII art lines, or renders a fallback ASCII emblem."""
     lines: list[str] = []
 
     if Image and PROFILE["avatar_path"] and Path(PROFILE["avatar_path"]).exists():
         img = Image.open(PROFILE["avatar_path"]).convert("L")
-        img = ImageOps.autocontrast(img, cutoff=2)
-        cols, rows = 58, 36
-        img = img.resize((cols, rows))
+        w_px, h_px = img.size
+        # Tighter head-and-shoulders portrait crop so facial features have maximum character density
+        img = img.crop((int(w_px * 0.08), int(h_px * 0.02), int(w_px * 0.92), int(h_px * 0.86)))
+        img = ImageOps.autocontrast(img, cutoff=1)
+        img = ImageEnhance.Contrast(img).enhance(1.25)
+        img = ImageEnhance.Sharpness(img).enhance(1.6)
+
+        cols, rows = 112, 60
+        img = img.resize((cols, rows), Image.Resampling.LANCZOS)
         for r in range(rows):
             row_chars = []
             for c in range(cols):
                 nx = (c - cols / 2) / (cols / 2)
                 ny = (r - rows / 2) / (rows / 2)
-                if nx * nx + ny * ny > 0.96:
+                dist = (nx * nx + ny * ny) ** 0.5
+                if dist >= 1.0:
                     row_chars.append(" ")
                     continue
-                lum = img.getpixel((c, r))
-                idx = int((lum / 255) * (len(ramp) - 1))
-                row_chars.append(ramp[idx])
+                lum = float(img.getpixel((c, r)))
+                # Subtle gamma lift keeps facial midtones crisp against dark backgrounds
+                lum = 255.0 * ((lum / 255.0) ** 0.88)
+                # Smoothly feather outer circular vignette into the warm paper background
+                if dist > 0.68:
+                    t = ((dist - 0.68) / 0.32) ** 1.5
+                    lum = lum * (1.0 - t) + 255.0 * t
+                idx = min(len(ASCII_RAMP) - 1, max(0, int((lum / 255.0) * (len(ASCII_RAMP) - 1))))
+                row_chars.append(ASCII_RAMP[idx])
             lines.append("".join(row_chars))
     else:
         lines = [
@@ -180,14 +197,17 @@ def build_ascii_portrait_svg(x: int, y: int, delay: float) -> str:
         ]
 
     svg_lines = []
-    line_height = 6.2 if len(lines) > 25 else 11.5
-    font_size = 5.6 if len(lines) > 25 else 9.5
+    is_hi_res = len(lines) > 25
+    line_height = 5.0 if is_hi_res else 11.5
+    font_size = 4.6 if is_hi_res else 9.5
+    ink_color = "#262523" if is_hi_res else "#575652"
+    step_delay = 0.007 if is_hi_res else 0.012
     for idx, line in enumerate(lines):
         ly = y + idx * line_height
-        line_delay = delay + 0.12 + idx * 0.012
+        line_delay = delay + 0.12 + idx * step_delay
         cls_attr = 'class="mono"' if STATIC else f'class="mono reveal" style="animation-delay:{line_delay:.2f}s"'
         svg_lines.append(
-            f'<text x="{x}" y="{ly:.1f}" fill="#575652" font-size="{font_size}" '
+            f'<text x="{x}" y="{ly:.1f}" fill="{ink_color}" font-size="{font_size}" '
             f'xml:space="preserve" {cls_attr}>{esc(line)}</text>'
         )
     return "\n".join(svg_lines)
@@ -263,7 +283,7 @@ def anim_attr(delay: float, cls: str = "reveal") -> str:
 # ==============================================================================
 def render_hero(font_css: str, delay: float = 0.05) -> str:
     w, h = 900, 390
-    portrait_svg = build_ascii_portrait_svg(x=545, y=68, delay=delay)
+    portrait_svg = build_ascii_portrait_svg(x=542, y=45, delay=delay)
 
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" fill="none">
   {base_style(font_css)}
@@ -552,7 +572,8 @@ def main() -> None:
         + "".join(r["kicker"] + r["name"] + r["desc"] + r["lang"] for r in PROFILE["featured_repos"])
         + "".join(s["name"] + s["role"] for s in PROFILE["tech_stack"])
         + "TOOLCHAIN & LANGUAGES FULL-STACK · SECURITY · AI Technologies I build with"
-        + "Every day, in blue REFRESHED DAILY contribution contributions in the last year less more ↗ @%#*+=-:. ..."
+        + "Every day, in blue REFRESHED DAILY contribution contributions in the last year less more ↗ ... "
+        + ASCII_RAMP
         + "".join(m["label"] for m in stats.get("month_markers", []))
         + f"{stats.get('total_contributions', 0):,}"
         + "0123456789"
