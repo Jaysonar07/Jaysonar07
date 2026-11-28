@@ -2,7 +2,7 @@
   "total_contributions": 41,
   "current_streak": 3,
   "active_days": 10,
-  "window_days": 363,
+  "window_days": 364,
   "busiest_day": "Nov 26",
   "busiest_day_count": 7,
   "monthly": [
@@ -521,7 +521,8 @@
       0,
       1,
       4,
-      2
+      2,
+      0
     ]
   ],
   "month_markers": [
